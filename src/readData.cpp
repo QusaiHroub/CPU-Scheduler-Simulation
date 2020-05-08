@@ -1,7 +1,7 @@
 #include "readData.h"
 
 void ReadData::openFile() {
-    m_inFile.open("C:\\Data.txt");
+    m_inFile.open("processes.txt");
 }
 
 void ReadData::printFile() {
@@ -25,8 +25,8 @@ int ReadData::readFile() {
         m_contextSwitch = m_tempArr[3];
 
         index = 0;
-        for (int i = 4; i + 3 < 19; i += 3) {
-            m_processes[index++] = Process(m_tempArr[i], m_tempArr[i + 1], m_tempArr[i + 2]);
+        for (int i = 4; i + 4 < 24; i += 4) {
+            m_processes[index++] = Process(m_tempArr[i], m_tempArr[i + 1], m_tempArr[i + 2], m_tempArr[i + 3]);
         }
     // end read
     } else {

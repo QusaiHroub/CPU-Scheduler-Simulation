@@ -10,7 +10,7 @@ private:
     string m_data;
     ifstream m_inFile;
     Process m_processes[5];
-    int m_tempArr[19];
+    int m_tempArr[24];
     int m_phiysicalAddress;
     int m_pageSize;
     int m_roundRobin;

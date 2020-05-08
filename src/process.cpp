@@ -1,12 +1,17 @@
 #include "process.h"
 
-Process::Process(int arrivalTime, int cpuBurst, int size) {
+Process::Process(int id, int arrivalTime, int cpuBurst, int size) {
+    setID(id);
     setArrivalTime(arrivalTime);
     setCPUBurst(cpuBurst);
     setSize(size);
 }
 
 Process::Process() {}
+
+int Process::getID() {
+    return m_id;
+}
 
 int Process::getArrivalTime() {
     return m_arrivalTime;
@@ -18,6 +23,10 @@ int Process::getCpuBurs() {
 
 int Process::getSize() {
     return m_size;
+}
+
+void Process::setID(int id) {
+    m_id = id;
 }
 
 void Process::setArrivalTime(int arrivalTime) {
