@@ -29,6 +29,7 @@ int main()  {
 
     SJF sjf(r.getProcesses(), r.getContextSwitch());
 
-    cout << "Average waiting Time = " << fcfs.avgWaitingTime() << endl;
+    cout << "Average waiting Time (SJF) = " << sjf.avgWaitingTime() << endl;
+    cout << "Average waiting Time (FCFS) = " << fcfs.avgWaitingTime() << endl;
     return 0;
 }

@@ -10,27 +10,18 @@
 #define FCFS_HPP
 
 #include "process.h"
+#include "processmanagement.hpp"
 
-class FCFS {
+class FCFS : public ProcessManagement{
 public:
-    FCFS();
     FCFS(Process * = nullptr, int = 0, int = 5);
     ~FCFS();
 
-    int *turnAroundTime();
-    double avgWaitingTime();
-    int *getDeepCopyOfWaitingTime();
-
 private:
-    const int PROCESSES_SIZE;
-
-    Process *m_processes = nullptr;
-    int m_CS;
     bool is_init = false;
 
-    int *m_waitingTime = nullptr;
+    void init();
 
-    void init(Process * = nullptr, int = 0);
+    static bool comp(Process &, Process &);
 };
-
 #endif // FCFS_HPP

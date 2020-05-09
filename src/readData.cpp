@@ -24,10 +24,12 @@ int ReadData::readFile() {
         m_roundRobin = m_tempArr[2];
         m_contextSwitch = m_tempArr[3];
 
+        int sizeOfm_tempArr = index;
         index = 0;
-        for (int i = 4; i + 4 < 24; i += 4) {
+        for (int i = 4; i + 4 < sizeOfm_tempArr; i += 4) {
             m_processes[index++] = Process(m_tempArr[i], m_tempArr[i + 1], m_tempArr[i + 2], m_tempArr[i + 3]);
         }
+
     // end read
     } else {
         if (is_try) {

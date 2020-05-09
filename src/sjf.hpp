@@ -3,37 +3,27 @@
  *
  * Authors
  * Mohammad Abureesh
+ * Qusai Hroub
  *
  */
 
 #include "process.h"
+#include "processmanagement.hpp"
+
 #include <iostream>
 
-
 using namespace std;
-class SJF
-{
+
+class SJF : public ProcessManagement{
+public:
+    SJF(Process * = nullptr, int = 0, int = 5);
+    ~SJF();
+
 private:
-    const int PROCESSES_SIZE;
+    bool is_init = false;
 
-    int m_CS;
-
-    int* m_waitingTime = nullptr;
-    int* m_turnAroundTime = nullptr;
-    Process* m_processes = nullptr;
-
-   
-    void init(Process* = nullptr, int = 0);
+    void init();
 
     static bool comp(Process &, Process &);
-
-public:
-    SJF();
-    SJF(Process* = nullptr,int = 0,int = 5);
-    
-    int* turnAroundTime();
-    int* getDeepCopyOfWaitingTime();
-    double avgWaitingTime();
-
+    static bool compCPUBurst(Process &, Process &);
 };
-
