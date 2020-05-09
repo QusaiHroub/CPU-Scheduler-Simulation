@@ -2,6 +2,7 @@
 #include "readData.h"
 #include "operations.h"
 #include "process.h"
+#include "fcfs.hpp"
 
 using namespace std;
 
@@ -23,9 +24,8 @@ int main()  {
     }
     r.closeFile();
 
-    op.WaitingTime_FCFS(r.getProcesses());
-    op.TurnAroundTime_FCFS(r.getProcesses());
+    FCFS fcfs(r.getProcesses(), r.getContextSwitch());
 
-    cout << "Average waiting Time = " << op.AvgWaitingTime_FCFS() << endl;
+    cout << "Average waiting Time = " << fcfs.avgWaitingTime() << endl;
     return 0;
 }

@@ -48,3 +48,7 @@ void ReadData::closeFile() {
 Process *ReadData::getProcesses() {
     return m_processes;
 }
+
+int ReadData::getContextSwitch() {
+    return m_contextSwitch;
+}

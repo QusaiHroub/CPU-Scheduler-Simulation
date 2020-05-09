@@ -22,4 +22,5 @@ public:
     int readFile();
     void closeFile();
     Process *getProcesses();
+    int getContextSwitch();
 };
