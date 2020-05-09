@@ -6,51 +6,32 @@
  *
  */
 
+#include "process.h"
 
-#include "sjf.hpp"
-
-SJF::SJF() : PROCESSES_SIZE(5) {}
-
-SJF::SJF(Process* processes, int cs, int processesSize) : PROCESSES_SIZE(processesSize)
+class SJF
 {
-    if (processes == nullptr) { return; }
+private:
+    const int PROCESSES_SIZE;
+    bool check = false;
 
-    init(processes, cs);
-}
+    int m_CS;
 
+    int* m_waitingTime = nullptr;
+    int* m_turnAroundTime = nullptr;
+    Process* m_processes = nullptr;
 
-//sort the processes according to their arrival time
-void SJF::arrangerArrival(Process *processes)
-{
-    if (processes == nullptr) {
-        return;
-    }
+   
+    void arrangerArrival(Process * = nullptr);
+    void init(Process* = nullptr, int = 0);
 
-    int min = processes[0].getArrivalTime();
-    for (int i = 0; i < PROCESSES_SIZE; i++) 
-    {
-        if (m_processes[i].getArrivalTime()<min) 
-        {
-            m_processes[i] = processes[i];
-        }
-    }
-}
+public:
+    SJF();
+    SJF(Process* = nullptr,int = 0,int = 5);
+    
+    int* turnAroundTime();
+    int* getDeepCopyOfWaitingTime();
+    double avgWaitingTime();
 
-void SJF::init(Process* processes, int cs)
-{
-    if (processes == nullptr) {
-        return;
-    }
+};
 
-    m_processes = new Process[PROCESSES_SIZE];
-    for (int i = 0; i < PROCESSES_SIZE; i++) 
-    {
-        m_processes[i] = processes[i];
-    }
-
-    if (cs < 0) {
-        cs = 0; 
-    }
-    m_CS = cs;
-}
 
