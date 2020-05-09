@@ -3,11 +3,14 @@
  *
  * Authors
  * Mohammad Abureesh
- * Qusai Hroub
+ *
  */
 
 #include "process.h"
+#include <iostream>
 
+
+using namespace std;
 class SJF
 {
 private:
@@ -20,7 +23,6 @@ private:
     Process* m_processes = nullptr;
 
    
-    void arrangerArrival(Process * = nullptr);
     void init(Process* = nullptr, int = 0);
 
 public:
