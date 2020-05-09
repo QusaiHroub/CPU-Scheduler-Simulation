@@ -3,7 +3,7 @@
  *
  * Authors
  * Mohammad Abureesh
- *
+ * Qusai Hroub
  */
 
 #include "process.h"
@@ -12,7 +12,6 @@ class SJF
 {
 private:
     const int PROCESSES_SIZE;
-    bool check = false;
 
     int m_CS;
 
@@ -33,5 +32,4 @@ public:
     double avgWaitingTime();
 
 };
-
 
