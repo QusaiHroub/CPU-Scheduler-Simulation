@@ -3,6 +3,7 @@
 #include "operations.h"
 #include "process.h"
 #include "fcfs.hpp"
+#include "sjf.hpp"
 
 using namespace std;
 
@@ -25,6 +26,8 @@ int main()  {
     r.closeFile();
 
     FCFS fcfs(r.getProcesses(), r.getContextSwitch());
+
+    SJF sjf(r.getProcesses(), r.getContextSwitch());
 
     cout << "Average waiting Time = " << fcfs.avgWaitingTime() << endl;
     return 0;

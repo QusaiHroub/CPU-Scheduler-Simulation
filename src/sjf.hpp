@@ -25,6 +25,8 @@ private:
    
     void init(Process* = nullptr, int = 0);
 
+    static bool comp(Process &, Process &);
+
 public:
     SJF();
     SJF(Process* = nullptr,int = 0,int = 5);

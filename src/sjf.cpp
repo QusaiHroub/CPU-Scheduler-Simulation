@@ -22,8 +22,9 @@ SJF::SJF(Process* processes, int cs, int processesSize) : PROCESSES_SIZE(process
     init(processes, cs);
 }
 
-
-
+bool SJF::comp(Process &p1, Process &p2) {
+    return p1.getArrivalTime() < p2.getArrivalTime();
+}
 
 void SJF::init(Process* processes, int cs)
 {
@@ -36,6 +37,8 @@ void SJF::init(Process* processes, int cs)
     {
         m_processes[i] = processes[i];
     }
+
+    sort(m_processes, m_processes + PROCESSES_SIZE, comp);
 
     if (cs < 0) {
         cs = 0; 
@@ -58,8 +61,6 @@ int* SJF::turnAroundTime()
     if (m_processes == nullptr) {
         return nullptr;
     }
-
-    sort(m_processes, m_processes + PROCESSES_SIZE);
 
     for (int i = 0; i < PROCESSES_SIZE; i++)
     {
