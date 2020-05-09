@@ -18,25 +18,29 @@ SJF::SJF(Process* processes, int cs, int processesSize) : PROCESSES_SIZE(process
     init(processes, cs);
 }
 
-void SJF::swap(Process a, Process b)
-{
-    Process temp = a;
-    a = b;
-    b = temp;
-}
 
-void SJF::arrangerArrival()
+//sort the processes according to their arrival time
+void SJF::arrangerArrival(Process *processes)
 {
-    int min = m_processes[0].getArrivalTime();
+    if (processes == nullptr) {
+        return;
+    }
+
+    int min = processes[0].getArrivalTime();
     for (int i = 0; i < PROCESSES_SIZE; i++) 
     {
-        
+        if (m_processes[i].getArrivalTime()<min) 
+        {
+            m_processes[i] = processes[i];
+        }
     }
 }
 
 void SJF::init(Process* processes, int cs)
 {
-    if (processes == nullptr) { return; }
+    if (processes == nullptr) {
+        return;
+    }
 
     m_processes = new Process[PROCESSES_SIZE];
     for (int i = 0; i < PROCESSES_SIZE; i++) 
@@ -44,6 +48,8 @@ void SJF::init(Process* processes, int cs)
         m_processes[i] = processes[i];
     }
 
-    if (cs < 0) { cs = 0; }
+    if (cs < 0) {
+        cs = 0; 
+    }
     m_CS = cs;
 }
