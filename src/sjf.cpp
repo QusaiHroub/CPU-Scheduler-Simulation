@@ -8,6 +8,8 @@
 
 
 #include "sjf.hpp"
+#include <bits/stdc++.h> 
+using namespace std;
 
 SJF::SJF() : PROCESSES_SIZE(5){
 
@@ -21,28 +23,7 @@ SJF::SJF(Process* processes, int cs, int processesSize) : PROCESSES_SIZE(process
 }
 
 
-//sort the processes according to their arrival time
-void SJF::arrangerArrival(Process *processes)
-{
-    if (processes == nullptr|| m_processes == nullptr) {
-        return;
-    }
-   
 
-    int min = processes[0].getArrivalTime();
-    
-    for (int i = 0; i < PROCESSES_SIZE; i++) 
-    {
-        for (int j = 0; j < PROCESSES_SIZE; j++) 
-        {
-            if (processes[j].getArrivalTime() < min) 
-            {
-                min = processes[j].getArrivalTime();
-                m_processes[i] = processes[j];
-            }
-        }
-    }
-}
 
 void SJF::init(Process* processes, int cs)
 {
@@ -61,7 +42,6 @@ void SJF::init(Process* processes, int cs)
     }
     m_CS = cs;
 
-    arrangerArrival(m_processes);
 
     m_waitingTime = new int[PROCESSES_SIZE];
     //waiting Time for p1
@@ -79,7 +59,7 @@ int* SJF::turnAroundTime()
         return nullptr;
     }
 
-    arrangerArrival(m_processes);
+    sort(m_processes, m_processes + PROCESSES_SIZE);
 
     for (int i = 0; i < PROCESSES_SIZE; i++)
     {
