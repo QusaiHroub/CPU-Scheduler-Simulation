@@ -30,10 +30,7 @@ void SJF::arrangerArrival()
     int min = m_processes[0].getArrivalTime();
     for (int i = 0; i < PROCESSES_SIZE; i++) 
     {
-        if (m_processes[i].getArrivalTime() < min) 
-        {
-            swap(m_processes[i], m_processes[i + 1]);
-        }
+        
     }
 }
 
