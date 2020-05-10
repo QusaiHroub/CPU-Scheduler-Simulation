@@ -45,7 +45,11 @@ void ProcessManagement::calcCompletionTime() {
     m_completionTime = new int[PROCESSES_SIZE];
     m_completionTime[0] = m_processes->getArrivalTime() + m_processes->getCpuBurs() + m_CS;
     for (int i = 1; i < PROCESSES_SIZE; i++) {
-        m_completionTime[i] = m_completionTime[i - 1] + m_processes[i].getCpuBurs() + m_CS;
+        if (m_completionTime[i - 1] > m_processes[i].getArrivalTime()) {
+            m_completionTime[i] = m_completionTime[i - 1] + m_processes[i].getCpuBurs() + m_CS;
+        } else {
+            m_completionTime[i] = m_processes[i].getArrivalTime() + m_processes[i].getCpuBurs() + m_CS;
+        }
     }
 }
 
