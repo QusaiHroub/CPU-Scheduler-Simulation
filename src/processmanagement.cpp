@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #include "processmanagement.hpp"
+#include "Process.hpp"
 
 ProcessManagement::ProcessManagement(Process *processes, int cs, int processesSize) : PROCESSES_SIZE(processesSize) {
     if (processes == nullptr) {
