@@ -10,7 +10,7 @@
 #include <algorithm>
 
 #include "processmanagement.hpp"
-#include "Process.hpp"
+#include "process.h"
 
 ProcessManagement::ProcessManagement(Process *processes, int cs, int processesSize) : PROCESSES_SIZE(processesSize) {
     if (processes == nullptr) {
@@ -141,4 +141,16 @@ int ProcessManagement::getProcessesSize() {
 
 int *ProcessManagement::getWaitingTime() {
     return m_waitingTime;
+}
+
+int ProcessManagement::getCS() {
+    return m_CS;
+}
+
+void ProcessManagement::setCompletionTime(int *completionTime) {
+    if (m_completionTime != nullptr) {
+        delete m_completionTime;
+    }
+
+    m_completionTime = completionTime;
 }

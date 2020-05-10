@@ -32,10 +32,13 @@ protected:
     virtual void calcTurnAroundTime();
 
     int getProcessesSize();
+    int getCS();
     int *getWaitingTime();
-    int *getcomletionTime();
+    int *getCompletionTime();
     int *getTurnAroundTime();
     Process *getProcesses();
+
+    void setCompletionTime(int *);
 };
 
 #endif // PROCESSMANAGEMENT_HPP

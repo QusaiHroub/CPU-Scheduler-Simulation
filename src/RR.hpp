@@ -7,8 +7,8 @@
  *
  */
 
-#include "Process.hpp"
-#include "ProcessManagement.hpp"
+#include "process.h"
+#include "processmanagement.hpp"
 
 class RR : public ProcessManagement
 {

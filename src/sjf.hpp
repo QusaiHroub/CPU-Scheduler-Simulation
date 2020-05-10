@@ -11,6 +11,7 @@
 #include "processmanagement.hpp"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -21,8 +22,12 @@ public:
 
 private:
     bool is_init = false;
+    vector<Process> m_readyQueue;
+    bool *visited;
 
     void init();
+
+    void calcCompletionTime();
 
     static bool comp(Process &, Process &);
     static bool compCPUBurst(Process &, Process &);
