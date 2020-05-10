@@ -8,7 +8,7 @@
 
 
 #include "sjf.hpp"
-#include <bits/stdc++.h> 
+#include<algorithm>
 using namespace std;
 
 SJF::SJF(Process* processes, int cs, int processesSize) : ProcessManagement(processes, cs, processesSize)
