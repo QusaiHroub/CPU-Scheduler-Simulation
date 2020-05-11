@@ -8,7 +8,10 @@
 
 
 #include "sjf.hpp"
+
+#include<map>
 #include<algorithm>
+
 using namespace std;
 
 SJF::SJF(Process* processes, int cs, int processesSize) : ProcessManagement(processes, cs, processesSize)
@@ -38,20 +41,26 @@ void SJF::calcCompletionTime() {
     int *completionTime = new int[len];
 
     vector< pair <string, int> > timeLine;
+    map<int, int> map;
+
+    for (int i = 0; i < len; i++) {
+        map[processes[i].getID()] = i;
+    }
 
     m_readyQueue.push_back(processes[0]);
-    completionTime[0] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
-    int index = 1;
-    int lastTime = completionTime[0];
+    completionTime[map[processes[0].getID()]] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
+    int index = m_readyQueue.front().getID();
+    int counter = 1;
+    int lastTime = completionTime[map[processes[0].getID()]];
 
     int totalOverhead = getCS();
-    int maxCompletionTime = completionTime[0];
+    int maxCompletionTime = completionTime[map[processes[0].getID()]];
 
     if (processes->getArrivalTime() != 0) {
         timeLine.push_back(pair<string, int>("  ", processes->getArrivalTime()));
     }
     timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
-    timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[0]));
+    timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[map[processes[0].getID()]]));
 
     loop:
     while(!m_readyQueue.empty()) {
@@ -62,34 +71,40 @@ void SJF::calcCompletionTime() {
                 visited[i] = true;
             }
         }
-        if (index >= len) {
+
+        if (counter >= len) {
             break;
         } else if (m_readyQueue.empty()) {
             for (int i = 1; i < len; i++) {
                 if (!visited[i]) {
                     m_readyQueue.push_back(processes[i]);
+                    index = map[m_readyQueue.front().getID()];
                     completionTime[index] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
 
                     timeLine.push_back(pair<string, int>("  ", processes[i].getArrivalTime()));
                     timeLine.push_back(pair<string, int>("CS", processes[i].getArrivalTime() + getCS()));
-                    timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[i]));
+                    timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[index]));
 
-                    lastTime = completionTime[index++];
+                    lastTime = completionTime[index];
                     if (maxCompletionTime < lastTime) {
                         maxCompletionTime = lastTime;
                     }
                     totalOverhead += getCS();
+                    counter++;
                     goto loop;
                 }
             }
         }
         sort(m_readyQueue.begin(), m_readyQueue.end(), compCPUBurst);
-        completionTime[index] = completionTime[index - 1] + m_readyQueue[0].getCpuBurst() + getCS();
+        index = map[m_readyQueue.front().getID()];
 
-        timeLine.push_back(pair<string, int>("CS", completionTime[index - 1] + getCS()));
+        completionTime[index] = lastTime + m_readyQueue[0].getCpuBurst() + getCS();
+
+        timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
         timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[index]));
 
-        lastTime = completionTime[index++];
+        lastTime = completionTime[index];
+        counter++;
         if (maxCompletionTime < lastTime) {
             maxCompletionTime = lastTime;
         }
