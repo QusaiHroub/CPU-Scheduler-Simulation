@@ -12,6 +12,9 @@ public:
     double avgCompletionTime();
     double avgTurnAroundTime();
     double cpuUtilization();
+    int *getProcessesIDs();
+    int *getProcessesArrivalTime();
+    int *getProcessesBurstTime();
     int *getDeepCopyOfWaitingTime();
     int *getDeepCopyOfCompletionTime();
     int *getDeepCopyOfTurnAroundTime();

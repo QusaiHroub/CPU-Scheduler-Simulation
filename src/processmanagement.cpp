@@ -200,3 +200,28 @@ void ProcessManagement::setMaxCompletionTime(int maxCompletionTime) {
 double ProcessManagement::cpuUtilization() {
     return double(m_maxCompletionTime - m_totalOverhead) / m_maxCompletionTime;
 }
+
+int *ProcessManagement::getProcessesIDs() {
+    int * list = new int[PROCESSES_SIZE];
+    for (int i = 0; i < PROCESSES_SIZE; i++) {
+        list[i] = m_processes[i].getID();
+    }
+
+    return list;
+}
+int *ProcessManagement::getProcessesArrivalTime() {
+    int * list = new int[PROCESSES_SIZE];
+    for (int i = 0; i < PROCESSES_SIZE; i++) {
+        list[i] = m_processes[i].getArrivalTime();
+    }
+
+    return list;
+}
+int *ProcessManagement::getProcessesBurstTime() {
+    int * list = new int[PROCESSES_SIZE];
+    for (int i = 0; i < PROCESSES_SIZE; i++) {
+        list[i] = m_processes[i].getCpuBurst();
+    }
+
+    return list;
+}

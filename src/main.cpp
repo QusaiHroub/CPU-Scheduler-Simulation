@@ -2,6 +2,13 @@
 #include <vector>
 #include <string>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+#ifdef __linux__
+#endif
+
 #include "readData.h"
 #include "operations.h"
 #include "process.h"
@@ -14,11 +21,23 @@
 using namespace std;
 
 int main()  {
+#ifdef _WIN32
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r);
+    MoveWindow(console, r.left, r.top, 800, 400, TRUE);
+#endif
+
+#ifdef __linux__
+
+#endif
+
     Draw draw;
 
     vector < ProcessManagement * > processManagementList;
     vector < string > processManagementListOfNames;
     vector < double > avgTable;
+    vector< pair < int *, int> > table;
 
     int ch;
     cout << "\n\t1.Part One\n \t2.Part two\n \t3.Exit.\n";
@@ -58,8 +77,16 @@ int main()  {
         avgTable.push_back(processManagementList[i]->avgTurnAroundTime());
         avgTable.push_back(processManagementList[i]->cpuUtilization());
 
-        draw.drawAVGSTable(avgTable);
+        table.clear();
+        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesIDs(), 5));
+        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesArrivalTime(), 5));
+        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesBurstTime(), 5));
+        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfCompletionTime(), 5));
+        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfTurnAroundTime(), 5));
+        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfWaitingTime(), 5));
 
+        draw.drawTable(table);
+        draw.drawAVGSTable(avgTable);
     }
 
     delete rr;

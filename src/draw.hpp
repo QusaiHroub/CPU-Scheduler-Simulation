@@ -9,7 +9,7 @@ class Draw {
 public:
     Draw();
 
-    void drawTable(vector<vector<int>> &);
+    void drawTable(vector< pair < int *, int> > &);
     void drawAVGSTable(vector<double> &);
 };
 
