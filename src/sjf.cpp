@@ -36,6 +36,9 @@ void SJF::calcCompletionTime() {
     Process *processes = getProcesses();
     int len = getProcessesSize();
     int *completionTime = new int[len];
+
+    vector< pair <string, int> > timeLine;
+
     m_readyQueue.push_back(processes[0]);
     completionTime[0] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
     int index = 1;
@@ -43,6 +46,12 @@ void SJF::calcCompletionTime() {
 
     int totalOverhead = getCS();
     int maxCompletionTime = completionTime[0];
+
+    if (processes->getArrivalTime() != 0) {
+        timeLine.push_back(pair<string, int>("  ", processes->getArrivalTime()));
+    }
+    timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
+    timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[0]));
 
     loop:
     while(!m_readyQueue.empty()) {
@@ -60,6 +69,11 @@ void SJF::calcCompletionTime() {
                 if (!visited[i]) {
                     m_readyQueue.push_back(processes[i]);
                     completionTime[index] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
+
+                    timeLine.push_back(pair<string, int>("  ", processes[i].getArrivalTime()));
+                    timeLine.push_back(pair<string, int>("CS", processes[i].getArrivalTime() + getCS()));
+                    timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[i]));
+
                     lastTime = completionTime[index++];
                     if (maxCompletionTime < lastTime) {
                         maxCompletionTime = lastTime;
@@ -71,6 +85,10 @@ void SJF::calcCompletionTime() {
         }
         sort(m_readyQueue.begin(), m_readyQueue.end(), compCPUBurst);
         completionTime[index] = completionTime[index - 1] + m_readyQueue[0].getCpuBurst() + getCS();
+
+        timeLine.push_back(pair<string, int>("CS", completionTime[index - 1] + getCS()));
+        timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[index]));
+
         lastTime = completionTime[index++];
         if (maxCompletionTime < lastTime) {
             maxCompletionTime = lastTime;
@@ -81,6 +99,7 @@ void SJF::calcCompletionTime() {
     setTotalOverhead(totalOverhead);
     setMaxCompletionTime(maxCompletionTime);
     setCompletionTime(completionTime);
+    setTimeLine(timeLine);
 }
 
 void SJF::init() {

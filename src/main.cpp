@@ -87,6 +87,9 @@ int main()  {
 
         draw.drawTable(table);
         draw.drawAVGSTable(avgTable);
+
+        cout << endl;
+        draw.drawGANTTChart(processManagementList[i]->getTimeLine());
     }
 
     delete rr;

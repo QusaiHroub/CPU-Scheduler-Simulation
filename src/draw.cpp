@@ -30,7 +30,7 @@ void Draw::drawTable(vector< pair < int *, int> > &table) {
     cout << "\t+--------------+----------------+--------------+-------------------+--------------------+----------------+" << endl;
 
     for (int i = 0; i < table[0].second; i++) {
-        cout << "\t|      " << setw(2) << "p" + to_string(table[0].first[i]) << "      |       "
+        cout << "\t|      " << setw(2) << "P" + to_string(table[0].first[i]) << "      |       "
              << setw(2) << to_string(table[1].first[i]) << "       |      "
              << setw(2) << to_string(table[2].first[i]) << "      |         "
              << setw(2) << to_string(table[3].first[i]) << "        |         "
@@ -38,4 +38,31 @@ void Draw::drawTable(vector< pair < int *, int> > &table) {
              << setw(2) << to_string(table[5].first[i]) << "       |";
         cout << "\n\t+--------------+----------------+--------------+-------------------+--------------------+----------------+" << endl;
     }
+}
+
+void Draw::drawGANTTChart(vector<pair<string, int> > &timeLine) {
+    cout << "\tGANTT Chart" << endl;
+    cout << "\t+";
+    for (size_t i = 0; i < timeLine.size(); i++) {
+        cout << "------+";
+    }
+    cout << endl;
+
+    cout << "\t|";
+    for (size_t i = 0; i < timeLine.size(); i++) {
+        cout << "  " + timeLine[i].first + "  |";
+    }
+    cout << endl;
+
+    cout << "\t+";
+    for (size_t i = 0; i < timeLine.size(); i++) {
+        cout << "------+";
+    }
+    cout << endl;
+
+    cout << "\t0";
+    for (size_t i = 0; i < timeLine.size(); i++) {
+        cout << setw(7) << timeLine[i].second;
+    }
+    cout << endl;
 }

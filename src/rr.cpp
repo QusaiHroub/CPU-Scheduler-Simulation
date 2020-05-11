@@ -34,6 +34,9 @@ void RR::calcCompletionTime() {
     int len = getProcessesSize();
     int *completionTime = new int[len];
     Process *processes = getProcesses();
+
+    vector< pair <string, int> > timeLine;
+
     int cpuBurst[len];
     int lastTime = 0;
     int maxIndex = 0;
@@ -51,14 +54,25 @@ void RR::calcCompletionTime() {
     for (int i = 0; i < len; i++) {
         cpuBurst[i] = processes[i].getCpuBurst();
     }
+
+    if (processes->getArrivalTime() != 0) {
+        timeLine.push_back(pair<string, int>("  ", processes->getArrivalTime()));
+    }
+
     loop:
     while (!queue.empty()) {
         int index = queue.front();
         if (m_quantum < cpuBurst[index]) {
+            timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
+
             lastTime += m_quantum + getCS();
             cpuBurst[index] -= m_quantum;
             totalOverhead += getCS();
+
+            timeLine.push_back(pair<string, int>("P" + to_string(processes[index].getID()), lastTime));
         } else {
+            timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
+
             lastTime += cpuBurst[index] + getCS();
             cpuBurst[index] = 0;
             completionTime[index] = lastTime;
@@ -66,6 +80,8 @@ void RR::calcCompletionTime() {
                 maxCompletionTime = lastTime;
             }
             totalOverhead += getCS();
+
+            timeLine.push_back(pair<string, int>("P" + to_string(processes[index].getID()), lastTime));
         }
 
         if (maxIndex < index) {
@@ -87,6 +103,7 @@ void RR::calcCompletionTime() {
         if (maxIndex + 1 < len && queue.empty()) {
             queue.push_back(maxIndex + 1);
             lastTime = processes[queue.front()].getArrivalTime();
+            timeLine.push_back(pair<string, int>("  ", lastTime));
             goto loop;
         }
 
@@ -95,4 +112,5 @@ void RR::calcCompletionTime() {
     setTotalOverhead(totalOverhead);
     setMaxCompletionTime(maxCompletionTime);
     setCompletionTime(completionTime);
+    setTimeLine(timeLine);
 }

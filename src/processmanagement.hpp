@@ -3,6 +3,9 @@
 
 #include "process.h"
 
+#include <vector>
+#include <string>
+
 class ProcessManagement {
 public:
     ProcessManagement(Process * = nullptr, int = 0, int = 5);
@@ -18,6 +21,7 @@ public:
     int *getDeepCopyOfWaitingTime();
     int *getDeepCopyOfCompletionTime();
     int *getDeepCopyOfTurnAroundTime();
+    vector< pair <string, int> > &getTimeLine();
 
 private:
     const int PROCESSES_SIZE;
@@ -31,6 +35,8 @@ private:
     int *m_waitingTime = nullptr;
     int *m_completionTime = nullptr;
     int *m_turnAroundTime = nullptr;
+
+    vector< pair <string, int> > m_timeLine;
 
     void init(Process * = nullptr, int = 0);
 
@@ -49,6 +55,7 @@ protected:
     void setCompletionTime(int *);
     void setTotalOverhead(int);
     void setMaxCompletionTime(int);
+    void setTimeLine(vector< pair <string, int> > &);
 };
 
 #endif // PROCESSMANAGEMENT_HPP
