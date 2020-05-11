@@ -6,7 +6,7 @@
 class ProcessManagement {
 public:
     ProcessManagement(Process * = nullptr, int = 0, int = 5);
-    ~ProcessManagement();
+    virtual ~ProcessManagement();
 
     double avgWaitingTime();
     double avgCompletionTime();
