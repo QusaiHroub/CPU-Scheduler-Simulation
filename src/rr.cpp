@@ -45,6 +45,9 @@ void RR::calcCompletionTime() {
     queue.push_back(0);
     isInQ[0] = true;
 
+    int totalOverhead = 0;
+    int maxCompletionTime = lastTime;
+
     for (int i = 0; i < len; i++) {
         cpuBurst[i] = processes[i].getCpuBurst();
     }
@@ -54,10 +57,15 @@ void RR::calcCompletionTime() {
         if (m_quantum < cpuBurst[index]) {
             lastTime += m_quantum + getCS();
             cpuBurst[index] -= m_quantum;
+            totalOverhead += getCS();
         } else {
             lastTime += cpuBurst[index] + getCS();
             cpuBurst[index] = 0;
             completionTime[index] = lastTime;
+            if (lastTime > maxCompletionTime) {
+                maxCompletionTime = lastTime;
+            }
+            totalOverhead += getCS();
         }
 
         if (maxIndex < index) {
@@ -78,10 +86,13 @@ void RR::calcCompletionTime() {
 
         if (maxIndex + 1 < len && queue.empty()) {
             queue.push_back(maxIndex + 1);
+            lastTime = processes[queue.front()].getArrivalTime();
             goto loop;
         }
 
     }
 
+    setTotalOverhead(totalOverhead);
+    setMaxCompletionTime(maxCompletionTime);
     setCompletionTime(completionTime);
 }
