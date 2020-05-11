@@ -13,7 +13,7 @@ private:
     int m_tempArr[24];
     int m_phiysicalAddress;
     int m_pageSize;
-    int m_roundRobin;
+    int m_quantum;
     int m_contextSwitch;
 
 public:
@@ -23,4 +23,5 @@ public:
     void closeFile();
     Process *getProcesses();
     int getContextSwitch();
+    int getQuantum();
 };

@@ -4,6 +4,7 @@
 #include "process.h"
 #include "fcfs.hpp"
 #include "sjf.hpp"
+#include "RR.hpp"
 
 using namespace std;
 
@@ -29,7 +30,10 @@ int main()  {
 
     SJF sjf(r.getProcesses(), r.getContextSwitch());
 
+    RR rr(r.getProcesses(), r.getContextSwitch(), 5, r.getQuantum());
+
     cout << "Average waiting Time (SJF) = " << sjf.avgWaitingTime() << endl;
     cout << "Average waiting Time (FCFS) = " << fcfs.avgWaitingTime() << endl;
+    cout << "Average waiting Time (RR) = " << rr.avgWaitingTime() << endl;
     return 0;
 }

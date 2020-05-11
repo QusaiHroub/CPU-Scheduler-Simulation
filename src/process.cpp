@@ -17,7 +17,7 @@ int Process::getArrivalTime() {
     return m_arrivalTime;
 }
 
-int Process::getCpuBurs() {
+int Process::getCpuBurst() {
     return m_cpuBurst;
 }
 

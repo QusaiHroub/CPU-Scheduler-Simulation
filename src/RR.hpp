@@ -13,8 +13,7 @@
 class RR : public ProcessManagement
 {
 public:
-    RR();
-    RR(Process* = nullptr, int = 0, int = 0, int = 5);
+    RR(Process* = nullptr, int = 0, int = 5, int = 0);
     ~RR();
 
 private:
@@ -24,6 +23,8 @@ private:
 
     void init(int=0);
 
+    void calcCompletionTime();
 
+    static bool comp(Process &, Process &);
 };
 

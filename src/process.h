@@ -15,7 +15,7 @@ public:
     Process(int, int, int, int);
 	
     int getArrivalTime();
-    int getCpuBurs();
+    int getCpuBurst();
     int getSize();
     int getID();
 

@@ -13,7 +13,7 @@ int * Operations::WaitingTime_FCFS(Process *processes) {
     m_waitingTime[0] = 0;
 
     for (int i = 1; i < 5; i++) {
-        m_waitingTime[i] = processes[i - 1].getCpuBurs() + m_waitingTime[i - 1];
+        m_waitingTime[i] = processes[i - 1].getCpuBurst() + m_waitingTime[i - 1];
     }
 
     //for (int i = 0; i < 5; i++) { cout << "\nwaiting Time for process" << i + 1 << " : " << waitingTime[i] << endl; }
@@ -26,7 +26,7 @@ int * Operations::TurnAroundTime_FCFS(Process *processes) {
     }
 
     for (int i = 0; i < 5; i++) {
-        m_turnAroundTime[i] = processes[i].getCpuBurs() + m_waitingTime[i];
+        m_turnAroundTime[i] = processes[i].getCpuBurst() + m_waitingTime[i];
     }
 
     //for (int i = 0; i < 5; i++) { cout << "\nTurn around Time for process" << i + 1 << " : " << TurnAroundTime[i] << endl; }

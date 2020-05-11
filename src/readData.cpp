@@ -21,7 +21,7 @@ int ReadData::readFile() {
 
         m_phiysicalAddress = m_tempArr[0];
         m_pageSize = m_tempArr[1];
-        m_roundRobin = m_tempArr[2];
+        m_quantum = m_tempArr[2];
         m_contextSwitch = m_tempArr[3];
 
         int sizeOfm_tempArr = index;
@@ -53,4 +53,8 @@ Process *ReadData::getProcesses() {
 
 int ReadData::getContextSwitch() {
     return m_contextSwitch;
+}
+
+int ReadData::getQuantum() {
+    return m_quantum;
 }
