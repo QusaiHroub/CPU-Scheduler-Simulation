@@ -2,7 +2,6 @@
 
 Operations::Operations() {}
 
-
 //FCFS algorithm
 int * Operations::WaitingTime_FCFS(Process *processes) {
     if (processes == nullptr) {

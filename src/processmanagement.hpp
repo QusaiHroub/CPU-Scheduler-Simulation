@@ -9,6 +9,9 @@ public:
     ~ProcessManagement();
 
     double avgWaitingTime();
+    double avgCompletionTime();
+    double avgTurnAroundTime();
+    double cpuUtilization();
     int *getDeepCopyOfWaitingTime();
     int *getDeepCopyOfCompletionTime();
     int *getDeepCopyOfTurnAroundTime();
@@ -18,6 +21,8 @@ private:
 
     Process *m_processes = nullptr;
     int m_CS;
+    int m_totalOverhead;
+    int m_maxCompletionTime = 0;
     bool is_init = false;
 
     int *m_waitingTime = nullptr;
@@ -39,6 +44,8 @@ protected:
     Process *getProcesses();
 
     void setCompletionTime(int *);
+    void setTotalOverhead(int);
+    void setMaxCompletionTime(int);
 };
 
 #endif // PROCESSMANAGEMENT_HPP

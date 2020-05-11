@@ -44,12 +44,17 @@ void ProcessManagement::calcCompletionTime() {
     }
     m_completionTime = new int[PROCESSES_SIZE];
     m_completionTime[0] = m_processes->getArrivalTime() + m_processes->getCpuBurst() + m_CS;
+    m_totalOverhead = m_CS;
     for (int i = 1; i < PROCESSES_SIZE; i++) {
         if (m_completionTime[i - 1] > m_processes[i].getArrivalTime()) {
             m_completionTime[i] = m_completionTime[i - 1] + m_processes[i].getCpuBurst() + m_CS;
         } else {
             m_completionTime[i] = m_processes[i].getArrivalTime() + m_processes[i].getCpuBurst() + m_CS;
         }
+        if (m_completionTime[i] > m_maxCompletionTime) {
+            m_maxCompletionTime = m_completionTime[i];
+        }
+        m_totalOverhead += m_CS;
     }
 }
 
@@ -107,8 +112,33 @@ double ProcessManagement::avgWaitingTime() {
         total_Wt += m_waitingTime[i];
     }
 
-    //cout << "Average waiting Time = " << total_Wt / 5 << endl;
     return  total_Wt / PROCESSES_SIZE;
+}
+
+double ProcessManagement::avgCompletionTime() {
+    if (m_completionTime == nullptr) {
+        return -1;
+    }
+
+    double total_Ct = 0;
+    for (int i = 0; i < PROCESSES_SIZE; i++) {
+        total_Ct += m_completionTime[i];
+    }
+
+    return  total_Ct / PROCESSES_SIZE;
+}
+
+double ProcessManagement::avgTurnAroundTime() {
+    if (m_turnAroundTime == nullptr) {
+        return -1;
+    }
+
+    double total_Tt = 0;
+    for (int i = 0; i < PROCESSES_SIZE; i++) {
+        total_Tt += m_turnAroundTime[i];
+    }
+
+    return  total_Tt / PROCESSES_SIZE;
 }
 
 int *ProcessManagement::getDeepCopyOfWaitingTime() {
@@ -157,4 +187,16 @@ void ProcessManagement::setCompletionTime(int *completionTime) {
     }
 
     m_completionTime = completionTime;
+}
+
+void ProcessManagement::setTotalOverhead(int totalOverhead) {
+    m_totalOverhead = totalOverhead;
+}
+
+void ProcessManagement::setMaxCompletionTime(int maxCompletionTime) {
+    m_maxCompletionTime = maxCompletionTime;
+}
+
+double ProcessManagement::cpuUtilization() {
+    return double(m_maxCompletionTime - m_totalOverhead) / m_maxCompletionTime;
 }
