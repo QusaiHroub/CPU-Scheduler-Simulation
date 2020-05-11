@@ -33,7 +33,13 @@ int main()  {
     RR rr(r.getProcesses(), r.getContextSwitch(), 5, r.getQuantum());
 
     cout << "Average waiting Time (SJF) = " << sjf.avgWaitingTime() << endl;
+    cout << "CPU Utiliztion (SJF) = " << sjf.cpuUtilization() << endl;
+
     cout << "Average waiting Time (FCFS) = " << fcfs.avgWaitingTime() << endl;
+    cout << "CPU Utiliztion (FCFS) = " << fcfs.cpuUtilization() << endl;
+
     cout << "Average waiting Time (RR) = " << rr.avgWaitingTime() << endl;
+    cout << "CPU Utiliztion (RR) = " << rr.cpuUtilization() << endl;
+
     return 0;
 }

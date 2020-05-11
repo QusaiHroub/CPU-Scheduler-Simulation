@@ -40,6 +40,10 @@ void SJF::calcCompletionTime() {
     completionTime[0] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
     int index = 1;
     int lastTime = completionTime[0];
+
+    int totalOverhead = getCS();
+    int maxCompletionTime = completionTime[0];
+
     loop:
     while(!m_readyQueue.empty()) {
         m_readyQueue.erase(m_readyQueue.begin());
@@ -57,6 +61,10 @@ void SJF::calcCompletionTime() {
                     m_readyQueue.push_back(processes[i]);
                     completionTime[index] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
                     lastTime = completionTime[index++];
+                    if (maxCompletionTime < lastTime) {
+                        maxCompletionTime = lastTime;
+                    }
+                    totalOverhead += getCS();
                     goto loop;
                 }
             }
@@ -64,7 +72,14 @@ void SJF::calcCompletionTime() {
         sort(m_readyQueue.begin(), m_readyQueue.end(), compCPUBurst);
         completionTime[index] = completionTime[index - 1] + m_readyQueue[0].getCpuBurst() + getCS();
         lastTime = completionTime[index++];
+        if (maxCompletionTime < lastTime) {
+            maxCompletionTime = lastTime;
+        }
+        totalOverhead += getCS();
     }
+
+    setTotalOverhead(totalOverhead);
+    setMaxCompletionTime(maxCompletionTime);
     setCompletionTime(completionTime);
 }
 
