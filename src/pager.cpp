@@ -26,6 +26,8 @@ void Pager::init(int memSize, int fSize) {
         m_memMap.first.first = nullptr;
     }
     m_memMap.first.first = (bool *) calloc(m_memMap.first.second, sizeof(bool));
+    m_memMap.first.first[1] = true;
+    m_memMap.first.first[2] = true;
     if (m_memMap.second) {
         delete m_memMap.second;
     }

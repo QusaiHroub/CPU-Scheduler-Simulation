@@ -112,14 +112,19 @@ void Draw::drawMemMap(pair<pair<bool *, int>, pair<int, int> *> &memMap) {
     for (int i = 1; i < len; i++) {
         if (isAllco[i]) {
             stat1 = "YES";
-            stat2 = pId_pageNo[i].first;
-            stat3 = pId_pageNo[i].second;
+            if (pId_pageNo[i].first == -1) {
+                stat2 = "OS";
+                stat3 = "---";
+            } else {
+                stat2 = to_string(pId_pageNo[i].first);
+                stat3 = to_string(pId_pageNo[i].second);
+            }
         } else {
             stat1 = " NO";
             stat2 = stat3 = "---";
         }
 
-        cout << "\t|     " << setw(3) << i << "      |       " << stat1 << "      |  " << stat2 << "  |    " << stat3 << "     |" << endl;
+        cout << "\t|     " << setw(3) << i << "      |       " << stat1 << "      |  " << setw(3) << stat2 << "  |    " << setw(3) << stat3 << "     |" << endl;
         cout << "\t+--------------+----------------+-------+------------+" << endl;
     }
 }

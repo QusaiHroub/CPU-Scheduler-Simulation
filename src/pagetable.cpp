@@ -34,7 +34,7 @@ void PageTable::init() {
     }
     int index = 1;
     if (m_memoryMap.first) {
-        for (int i = 1; i < m_memoryMap.second; i++) {
+        for (int i = 3; i < m_memoryMap.second; i++) {
             if (!m_memoryMap.first[i]) {
                 m_table[index].fNumber = i;
                 m_table[index++].isValid = i;
@@ -46,11 +46,11 @@ void PageTable::init() {
         }
     }
 
-    int frameIndex = 1;
+    int frameIndex = 3;
     for (int i = index; i < m_length; i++) {
         frameIndex = frameIndex % m_memoryMap.second;
         if (frameIndex == 0) {
-            frameIndex = 1;
+            frameIndex = 3;
         }
 
         m_table[i].fNumber = frameIndex++;
