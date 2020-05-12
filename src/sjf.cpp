@@ -59,7 +59,8 @@ void SJF::calcCompletionTime() {
     if (processes->getArrivalTime() != 0) {
         timeLine.push_back(pair<string, int>("  ", processes->getArrivalTime()));
     }
-    timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
+    if (getCS())
+        timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
     timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[map[processes[0].getID()]]));
 
     loop:
@@ -82,7 +83,8 @@ void SJF::calcCompletionTime() {
                     completionTime[index] = m_readyQueue[0].getArrivalTime() + m_readyQueue[0].getCpuBurst() + getCS();
 
                     timeLine.push_back(pair<string, int>("  ", processes[i].getArrivalTime()));
-                    timeLine.push_back(pair<string, int>("CS", processes[i].getArrivalTime() + getCS()));
+                    if (getCS())
+                        timeLine.push_back(pair<string, int>("CS", processes[i].getArrivalTime() + getCS()));
                     timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[index]));
 
                     lastTime = completionTime[index];
@@ -100,7 +102,8 @@ void SJF::calcCompletionTime() {
 
         completionTime[index] = lastTime + m_readyQueue[0].getCpuBurst() + getCS();
 
-        timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
+        if (getCS())
+            timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
         timeLine.push_back(pair<string, int>("P" + to_string(m_readyQueue[0].getID()), completionTime[index]));
 
         lastTime = completionTime[index];

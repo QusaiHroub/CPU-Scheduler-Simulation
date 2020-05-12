@@ -63,7 +63,8 @@ void RR::calcCompletionTime() {
     while (!queue.empty()) {
         int index = queue.front();
         if (m_quantum < cpuBurst[index]) {
-            timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
+            if (getCS())
+                timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
 
             lastTime += m_quantum + getCS();
             cpuBurst[index] -= m_quantum;
@@ -71,7 +72,8 @@ void RR::calcCompletionTime() {
 
             timeLine.push_back(pair<string, int>("P" + to_string(processes[index].getID()), lastTime));
         } else {
-            timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
+            if (getCS())
+                timeLine.push_back(pair<string, int>("CS", lastTime + getCS()));
 
             lastTime += cpuBurst[index] + getCS();
             cpuBurst[index] = 0;

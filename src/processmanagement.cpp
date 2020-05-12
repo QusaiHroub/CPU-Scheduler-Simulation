@@ -49,20 +49,23 @@ void ProcessManagement::calcCompletionTime() {
     if (m_processes->getArrivalTime() != 0) {
         m_timeLine.push_back(pair<string, int>("  ", m_processes->getArrivalTime()));
     }
-    m_timeLine.push_back(pair<string, int>("CS", m_processes->getArrivalTime() + m_CS));
+    if (m_CS)
+        m_timeLine.push_back(pair<string, int>("CS", m_processes->getArrivalTime() + m_CS));
     m_timeLine.push_back(pair<string, int>("P"  + to_string(m_processes->getID()), m_completionTime[0]));
 
     for (int i = 1; i < PROCESSES_SIZE; i++) {
         if (m_completionTime[i - 1] >= m_processes[i].getArrivalTime()) {
             m_completionTime[i] = m_completionTime[i - 1] + m_processes[i].getCpuBurst() + m_CS;
 
-            m_timeLine.push_back(pair<string, int>("CS", m_completionTime[i - 1] + m_CS));
+            if (m_CS)
+                m_timeLine.push_back(pair<string, int>("CS", m_completionTime[i - 1] + m_CS));
             m_timeLine.push_back(pair<string, int>("P" + to_string(m_processes[i].getID()), m_completionTime[i]));
         } else {
             m_completionTime[i] = m_processes[i].getArrivalTime() + m_processes[i].getCpuBurst() + m_CS;
 
             m_timeLine.push_back(pair<string, int>("  ", m_processes[i].getArrivalTime()));
-            m_timeLine.push_back(pair<string, int>("CS", m_processes[i].getArrivalTime() + m_CS));
+            if (m_CS)
+                m_timeLine.push_back(pair<string, int>("CS", m_processes[i].getArrivalTime() + m_CS));
             m_timeLine.push_back(pair<string, int>("P" + to_string(m_processes[i].getID()), m_completionTime[i]));
         }
         if (m_completionTime[i] > m_maxCompletionTime) {
