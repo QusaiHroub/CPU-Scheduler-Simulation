@@ -38,8 +38,7 @@ bool FCFS::comp(Process &p1, Process &p2) {
 
 //this function work on implementation <FCFS> algorithm 
 void FCFS::init() {
-    
-    //getProcesse() function defined in the <ProcessManagement> class return array of Processes
+   
     Process *processes = getProcesses(); 
     
     //Arrange the Processes based on the arrival time before starting the calculations
