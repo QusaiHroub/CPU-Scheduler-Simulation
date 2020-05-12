@@ -102,6 +102,8 @@ int main()  {
         draw.drawPageTable(*pageTableList.first[i]);
     }
 
+    draw.drawMemMap(pager.getMemMap());
+
     delete rr;
     delete sjf;
     delete fcfs;

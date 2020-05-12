@@ -94,3 +94,32 @@ void Draw::drawPageTable(PageTable &pageTable) {
         cout << "\t+------------+-------------+-----------+-------------+" << endl;
     }
 }
+
+void Draw::drawMemMap(pair<pair<bool *, int>, pair<int, int> *> &memMap) {
+    string stat1 = "NULL", stat2 = "---", stat3 = "---";
+    int len = memMap.first.second;
+    bool *isAllco = memMap.first.first;
+    pair<int, int> * pId_pageNo = memMap.second;
+
+    cout << "\t+--------------+" << endl;
+    cout << "\t|  Memory map  |\n";
+    cout << "\t+--------------+----------------+-------+------------+" << endl;
+    cout << "\t|   Frame No.  |  Is allocated  |  PID  |  Page No.  |" << endl;
+    cout << "\t+--------------+----------------+-------+------------+" << endl;
+    cout << "\t|     " << setw(3) << 0 << "      |       " << stat1 << "     |  " << stat2 << "  |    " << stat3 << "     |" << endl;
+    cout << "\t+--------------+----------------+-------+------------+" << endl;
+
+    for (int i = 1; i < len; i++) {
+        if (isAllco[i]) {
+            stat1 = "YES";
+            stat2 = pId_pageNo[i].first;
+            stat3 = pId_pageNo[i].second;
+        } else {
+            stat1 = " NO";
+            stat2 = stat3 = "---";
+        }
+
+        cout << "\t|     " << setw(3) << i << "      |       " << stat1 << "      |  " << stat2 << "  |    " << stat3 << "     |" << endl;
+        cout << "\t+--------------+----------------+-------+------------+" << endl;
+    }
+}
