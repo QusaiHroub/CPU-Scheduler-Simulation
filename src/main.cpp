@@ -17,6 +17,8 @@
 #include "RR.hpp"
 #include "draw.hpp"
 #include "processmanagement.hpp"
+#include "pagetable.hpp"
+#include "pager.hpp"
 
 using namespace std;
 
@@ -62,6 +64,8 @@ int main()  {
 
     RR *rr = new RR(r.getProcesses(), r.getContextSwitch(), 5, r.getQuantum());
 
+    Pager pager(r.getMemSize(), r.getFrameSize());
+
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(fcfs));
     processManagementListOfNames.push_back("FCFS");
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(sjf));
@@ -92,9 +96,19 @@ int main()  {
         draw.drawGANTTChart(processManagementList[i]->getTimeLine());
     }
 
+    pair<PageTable **, int> pageTableList = pager.paging(r.getProcesses(), 5);
+    for (int i = 0; i < pageTableList.second; i++) {
+        cout << endl;
+        draw.drawPageTable(*pageTableList.first[i]);
+    }
+
     delete rr;
     delete sjf;
     delete fcfs;
 
+    for (int i = 0; i < pageTableList.second; i++) {
+        delete pageTableList.first[i];
+    }
+    delete pageTableList.first;
     return 0;
 }

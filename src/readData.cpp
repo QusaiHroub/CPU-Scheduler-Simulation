@@ -19,7 +19,7 @@ int ReadData::readFile() {
 
         while(m_inFile >> m_tempArr[index++]);
 
-        m_phiysicalAddress = m_tempArr[0];
+        m_memSize = m_tempArr[0];
         m_pageSize = m_tempArr[1];
         m_quantum = m_tempArr[2];
         m_contextSwitch = m_tempArr[3];
@@ -57,4 +57,12 @@ int ReadData::getContextSwitch() {
 
 int ReadData::getQuantum() {
     return m_quantum;
+}
+
+int ReadData::getMemSize() {
+    return m_memSize;
+}
+
+int ReadData::getFrameSize() {
+    return m_pageSize;
 }

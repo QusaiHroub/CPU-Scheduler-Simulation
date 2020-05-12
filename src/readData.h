@@ -11,7 +11,7 @@ private:
     ifstream m_inFile;
     Process m_processes[5];
     int m_tempArr[24];
-    int m_phiysicalAddress;
+    int m_memSize;
     int m_pageSize;
     int m_quantum;
     int m_contextSwitch;
@@ -24,4 +24,6 @@ public:
     Process *getProcesses();
     int getContextSwitch();
     int getQuantum();
+    int getMemSize();
+    int getFrameSize();
 };

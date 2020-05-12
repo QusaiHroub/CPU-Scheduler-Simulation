@@ -66,3 +66,31 @@ void Draw::drawGANTTChart(vector<pair<string, int> > &timeLine) {
     }
     cout << endl;
 }
+
+void Draw::drawPageTable(PageTable &pageTable) {
+    int len = pageTable.getLength();
+    PageTable::tableElement *table = pageTable.getTable();
+    string stat1, stat2;
+    cout << "\t+--------------------------+" << endl;
+    cout << "\t|    Page Table for P" << setw(2) << pageTable.getProcessID() << "    |" << endl;
+    cout << "\t+------------+-------------+-----------+-------------+" << endl;
+    cout << "\t|  Page No.  |  Frame No.  | Is valid  |  Is in mem  |" << endl;
+    cout << "\t+------------+-------------+-----------+-------------+" << endl;
+
+    for (int i = 0; i < len; i++) {
+        if (table[i].isValid) {
+            stat1 = "YES";
+            if (table[i].isInMem) {
+                stat2 = "YES";
+            } else {
+                stat2 = " NO";
+            }
+        } else {
+            stat1 = " NO";
+            stat2 = "---";
+        }
+        cout << "\t|    " << setw(3) << i << "     |     " << setw(3) << table[i].fNumber
+             << "     |    " << stat1 << "    |     " << stat2 << "     |\n";
+        cout << "\t+------------+-------------+-----------+-------------+" << endl;
+    }
+}
