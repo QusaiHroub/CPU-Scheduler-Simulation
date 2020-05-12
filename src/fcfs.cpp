@@ -23,7 +23,8 @@ FCFS::FCFS(Process *processes, int cs, int processesSize): ProcessManagement(pro
         return;
     }
 
-    init(); //call this function for implements FCFS algorithm
+    //call this function for implements FCFS algorithm
+    init(); 
 }
 
 //deconstructor
@@ -38,17 +39,17 @@ bool FCFS::comp(Process &p1, Process &p2) {
 //this function work on implementation <FCFS> algorithm 
 void FCFS::init() {
     
-    Process *processes = getProcesses(); //getProcesse() function defined in the <ProcessManagement> class return array of Processes
-
+    //getProcesse() function defined in the <ProcessManagement> class return array of Processes
+    Process *processes = getProcesses(); 
     
     //Arrange the Processes based on the arrival time before starting the calculations
     sort(processes, processes + getProcessesSize(), comp);
 
  //these functions are defined in the <ProcessManagement> class.   
     
-    calcCompletionTime();//to find Completion time for each process
-    calcTurnAroundTime();//to find Arround time for each process
-    calcWaitingTime();//to find waiting time for each process
+    calcCompletionTime();
+    calcTurnAroundTime();
+    calcWaitingTime();
     
     //As long as this variable equals true means that the algorithm has been implemented
     is_init = true;
