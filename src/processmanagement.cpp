@@ -53,7 +53,7 @@ void ProcessManagement::calcCompletionTime() {
     m_timeLine.push_back(pair<string, int>("P"  + to_string(m_processes->getID()), m_completionTime[0]));
 
     for (int i = 1; i < PROCESSES_SIZE; i++) {
-        if (m_completionTime[i - 1] > m_processes[i].getArrivalTime()) {
+        if (m_completionTime[i - 1] >= m_processes[i].getArrivalTime()) {
             m_completionTime[i] = m_completionTime[i - 1] + m_processes[i].getCpuBurst() + m_CS;
 
             m_timeLine.push_back(pair<string, int>("CS", m_completionTime[i - 1] + m_CS));
