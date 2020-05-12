@@ -46,7 +46,6 @@ void FCFS::init() {
     sort(processes, processes + getProcessesSize(), comp);
 
  //these functions are defined in the <ProcessManagement> class.   
-    
     calcCompletionTime();
     calcTurnAroundTime();
     calcWaitingTime();
