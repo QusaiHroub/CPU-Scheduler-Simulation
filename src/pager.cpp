@@ -61,7 +61,13 @@ Pager::Address Pager::mapping(int processID, int logicalAddress, pair<PageTable 
     address.pd.first = address.logicalAndPhysicalAddress.first / m_fSize;
     address.pd.second = address.logicalAndPhysicalAddress.first - address.pd.first * m_fSize;
     address.pd.first++;
+
+    if (address.pd.first >= tables.first[m_processMap[processID]]->getLength()) {
+        address.errorCode = 1;
+        return address;
+    }
     address.fd.first = tables.first[m_processMap[processID]]->getTable()[address.pd.first].fNumber;
+
     address.fd.second = address.pd.second;
     address.logicalAndPhysicalAddress.second = address.fd.first * m_fSize + address.fd.second;
 
