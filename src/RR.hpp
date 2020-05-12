@@ -5,14 +5,19 @@
  * Mohammad Abureesh
  * Qusai Hroub
  *
+ * C++ program for implementation of RR algorithm
+ * scheduling
+ * this class inherits all characteristics in <ProcessManagement>
+ *
  */
 
-#include "process.h"
+#include "process.hpp"
 #include "processmanagement.hpp"
 
 class RR : public ProcessManagement
 {
 public:
+ //constructors
     RR(Process* = nullptr, int = 0, int = 5, int = 0);
     ~RR();
 
@@ -21,10 +26,14 @@ private:
     
     int m_quantum;
 
+ //Functions 
+
+    //this Function initializes all function for algorithm
     void init(int=0);
 
     void calcCompletionTime();
 
+    //this function return true if arrival time for first process less than arrival time for the second process.  
     static bool comp(Process &, Process &);
 };
 
