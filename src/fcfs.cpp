@@ -15,7 +15,7 @@
 
 /*
 This constructor receives an array of Processes, context Switch (CS), 
-and the size of the operations, and if the array equals nullptr, 
+and the size of the Processes, and if the array equals nullptr, 
 it returns and does not implement the algorithm. Otherwise, it calls the function that implements the algorithm init().
 */
 FCFS::FCFS(Process *processes, int cs, int processesSize): ProcessManagement(processes, cs, processesSize) {
