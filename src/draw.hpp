@@ -5,6 +5,7 @@
 #include <string>
 
 #include "pagetable.hpp"
+#include "pager.hpp"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
     void drawGANTTChart(vector<pair<string, int>> &);
     void drawPageTable(PageTable &);
     void drawMemMap(pair < pair < bool *, int >, pair< int, int > *> &);
+    void drawPhysicalAddressMapingSeq(Pager::Address &);
 };
 
 #endif // DRAW_HPP

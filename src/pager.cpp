@@ -35,6 +35,7 @@ void Pager::init(int memSize, int fSize) {
     for (int i = 0; i < m_memMap.first.second; i++) {
         m_memMap.second[i] = pair <int, int> (-1, -1);
     }
+
 }
 
 pair<PageTable **, int> Pager::paging(Process * processes, int len) {
@@ -43,9 +44,26 @@ pair<PageTable **, int> Pager::paging(Process * processes, int len) {
         list[i] = new PageTable(&processes[i], m_fSize, m_memMap.first);
     }
 
+    for (int i = 0; i < len; i++) {
+        m_processMap[processes[i].getID()] = i;
+    }
+
     return pair<PageTable **, int> (list, len);
 }
 
 pair < pair < bool *, int >, pair< int, int > *> &Pager::getMemMap() {
     return m_memMap;
+}
+
+Pager::Address Pager::mapping(int processID, int logicalAddress, pair<PageTable **, int> &tables) {
+    Address address;
+    address.logicalAndPhysicalAddress.first = logicalAddress;
+    address.pd.first = address.logicalAndPhysicalAddress.first / m_fSize;
+    address.pd.second = address.logicalAndPhysicalAddress.first - address.pd.first * m_fSize;
+    address.pd.first++;
+    address.fd.first = tables.first[m_processMap[processID]]->getTable()[address.pd.first].fNumber;
+    address.fd.second = address.pd.second;
+    address.logicalAndPhysicalAddress.second = address.fd.first * m_fSize + address.fd.second;
+
+    return address;
 }

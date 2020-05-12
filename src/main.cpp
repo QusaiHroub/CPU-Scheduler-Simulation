@@ -103,6 +103,8 @@ int main()  {
     }
 
     draw.drawMemMap(pager.getMemMap());
+    Pager::Address address = pager.mapping(0, 1050, pageTableList);
+    draw.drawPhysicalAddressMapingSeq(address);
 
     delete rr;
     delete sjf;

@@ -128,3 +128,10 @@ void Draw::drawMemMap(pair<pair<bool *, int>, pair<int, int> *> &memMap) {
         cout << "\t+--------------+----------------+-------+------------+" << endl;
     }
 }
+
+void Draw::drawPhysicalAddressMapingSeq(Pager::Address &address) {
+    cout << "\tPhysical address is " << address.logicalAndPhysicalAddress.second << endl;
+    cout << "\t" << address.logicalAndPhysicalAddress.first << " ---> (p, d) = ("
+         << address.pd.first << ", " << address.pd.second << ") ---> (f, d) = ("
+         << address.fd.first << ", " << address.fd.second << ") ---> " << address.logicalAndPhysicalAddress.second << endl;
+}
