@@ -7,7 +7,8 @@
 class Pager {
     int m_memSize;
     int m_fSize;
-    pair < bool *, int > m_memMap = pair < bool *, int > (nullptr, 0);
+    pair < pair < bool *, int >, pair< int, int > > m_memMap =
+            pair < pair < bool *, int >, pair< int, int > >(pair < bool *, int > (nullptr, 0), pair< int, int > (-1, -1));
 public:
     Pager();
     Pager(int, int);
