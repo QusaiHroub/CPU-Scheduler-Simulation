@@ -6,6 +6,12 @@
  *
  */
 
+/* 
+ * C++ program for implementation of FCFS algorithm  
+ * scheduling
+ * this class inherits all characteristics in <ProcessManagement>
+ */
+
 #ifndef FCFS_HPP
 #define FCFS_HPP
 
@@ -14,16 +20,18 @@
 
 class FCFS : public ProcessManagement{
 public:
-    //constructors
+ //constructors
     FCFS(Process * = nullptr, int = 0, int = 5);
     ~FCFS();
 
 private:
-    
     bool is_init = false;
     
-    //Methods
+ //Functions 
+    
+    //this Function initializes all function for algorithm
     void init();
+    
     static bool comp(Process &, Process &);
 };
 #endif // FCFS_HPP
