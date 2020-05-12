@@ -1,3 +1,15 @@
+/*
+ * This file is part of OS Project.
+ *
+ * Authors
+ * Mohammad Abureesh
+ * Qusai Hroub
+ *
+ * C++ program for Process Management
+ * Use this class for all scheduling algorithms in this program 
+ * 
+ */
+
 #ifndef PROCESSMANAGEMENT_HPP
 #define PROCESSMANAGEMENT_HPP
 
@@ -8,6 +20,8 @@
 
 class ProcessManagement {
 public:
+    
+     //constructors
     ProcessManagement(Process * = nullptr, int = 0, int = 5);
     virtual ~ProcessManagement();
 
@@ -24,8 +38,11 @@ public:
     vector< pair <string, int> > &getTimeLine();
 
 private:
+    
+    //Numbers of Processes in File
     const int PROCESSES_SIZE;
-
+    
+    //Attributes
     Process *m_processes = nullptr;
     int m_CS;
     int m_totalOverhead;
@@ -34,17 +51,21 @@ private:
 
     int *m_waitingTime = nullptr;
     int *m_completionTime = nullptr;
-    int *m_turnAroundTime = nullptr;
-
+    int *m_turnAroundTime = nullptr;    
+    //end attributes
+    
     vector< pair <string, int> > m_timeLine;
-
+    
+     //this Function initializes for Processes Management 
     void init(Process * = nullptr, int = 0);
 
 protected:
+    // virtual functions
     virtual void calcCompletionTime();
     virtual void calcWaitingTime();
     virtual void calcTurnAroundTime();
 
+    
     int getProcessesSize();
     int getCS();
     int *getWaitingTime();
