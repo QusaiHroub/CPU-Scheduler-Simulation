@@ -41,12 +41,6 @@ int main()  {
     vector < double > avgTable;
     vector< pair < int *, int> > table;
 
-    int ch;
-    cout << "\n\t1.Part One\n \t2.Part two\n \t3.Exit.\n";
-    cout << "\tSelect :";
-    cin >> ch;
-    cout<<endl<<endl;
-
     ReadData r;
     Process p;
     Operations op;
@@ -73,38 +67,54 @@ int main()  {
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(rr));
     processManagementListOfNames.push_back("RR");
 
-    for (size_t i = 0; i < processManagementList.size(); i++) {
-        cout << endl << "\t" << processManagementListOfNames[i] << endl;
-        avgTable.clear();
-        avgTable.push_back(processManagementList[i]->avgWaitingTime());
-        avgTable.push_back(processManagementList[i]->avgCompletionTime());
-        avgTable.push_back(processManagementList[i]->avgTurnAroundTime());
-        avgTable.push_back(processManagementList[i]->cpuUtilization());
-
-        table.clear();
-        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesIDs(), 5));
-        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesArrivalTime(), 5));
-        table.push_back(pair<int *, int> (processManagementList[i]->getProcessesBurstTime(), 5));
-        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfCompletionTime(), 5));
-        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfTurnAroundTime(), 5));
-        table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfWaitingTime(), 5));
-
-        draw.drawTable(table);
-        draw.drawAVGSTable(avgTable);
-
-        cout << endl;
-        draw.drawGANTTChart(processManagementList[i]->getTimeLine());
-    }
-
     pair<PageTable **, int> pageTableList = pager.paging(r.getProcesses(), 5);
-    for (int i = 0; i < pageTableList.second; i++) {
-        cout << endl;
-        draw.drawPageTable(*pageTableList.first[i]);
-    }
 
-    draw.drawMemMap(pager.getMemMap());
-    Pager::Address address = pager.mapping(0, 1050, pageTableList);
-    draw.drawPhysicalAddressMapingSeq(address);
+    int ch;
+
+    mainInputLoop:
+    while (cout << "\n\t1.Part One\n \t2.Part two\n \t3.Exit.\n",
+           cout << "\tSelect :",
+           cin >> ch) {
+        if (ch == 1) {
+            for (size_t i = 0; i < processManagementList.size(); i++) {
+                cout << endl << "\t" << processManagementListOfNames[i] << endl;
+                avgTable.clear();
+                avgTable.push_back(processManagementList[i]->avgWaitingTime());
+                avgTable.push_back(processManagementList[i]->avgCompletionTime());
+                avgTable.push_back(processManagementList[i]->avgTurnAroundTime());
+                avgTable.push_back(processManagementList[i]->cpuUtilization());
+
+                table.clear();
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesIDs(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesArrivalTime(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesBurstTime(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfCompletionTime(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfTurnAroundTime(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfWaitingTime(), 5));
+
+                draw.drawTable(table);
+                draw.drawAVGSTable(avgTable);
+
+                cout << endl;
+                draw.drawGANTTChart(processManagementList[i]->getTimeLine());
+            }
+        } else if (ch == 2) {
+            for (int i = 0; i < pageTableList.second; i++) {
+                cout << endl;
+                draw.drawPageTable(*pageTableList.first[i]);
+            }
+
+            cout << endl;
+            draw.drawMemMap(pager.getMemMap());
+
+            int logicalAddress, processID;
+            while (cout << "\n\tEnter process ID and logicalAssress for mapping: ", cin >> processID >> logicalAddress) {
+                Pager::Address address = pager.mapping(processID, logicalAddress, pageTableList);
+                draw.drawPhysicalAddressMapingSeq(address);
+            }
+            goto mainInputLoop;
+        }
+    }
 
     delete rr;
     delete sjf;
