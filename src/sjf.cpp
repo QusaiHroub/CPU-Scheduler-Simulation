@@ -4,6 +4,9 @@
  * Authors
  * Mohammad Abureesh
  * Qusai Hroub
+ *
+ * C++ program for implementation of FCFS algorithm
+ * this file, declaration for "SJF.hpp"
  */
 
 
@@ -14,35 +17,52 @@
 
 using namespace std;
 
+/*
+This constructor receives an array of Processes, context Switch (CS), 
+and the size of the operations, and if the array equals nullptr, 
+it returns and does not implement the algorithm. Otherwise, it calls the function that implements the algorithm init().
+*/
 SJF::SJF(Process* processes, int cs, int processesSize) : ProcessManagement(processes, cs, processesSize)
 {
     if (processes == nullptr) {
         return;
     }
 
+    //call this function for implements SJF algorithm
     init();
 }
 
+//deconstructor
 SJF::~SJF() {
 
 }
 
+//this function return true, when the arrival time of the first process is less than the arrival time of the second process.
 bool SJF::comp(Process &p1, Process &p2) {
     return p1.getArrivalTime() < p2.getArrivalTime();
 }
 
+//this function return true, when the CPU Bursy of the first process is less than the CPU Burst of the second process.
 bool SJF::compCPUBurst(Process &p1, Process &p2) {
     return p1.getCpuBurst() < p2.getCpuBurst();
 }
 
+// Function to calculate Completion Time for SJF algorithm 
 void SJF::calcCompletionTime() {
+    
+    //Declare an array of Processes
     Process *processes = getProcesses();
     int len = getProcessesSize();
+    
+    //Declare an array integer to store the end time for each process
     int *completionTime = new int[len];
 
     vector< pair <string, int> > timeLine;
+    
+    //To create a map with a key of the type integer,and value of type integer   
     map<int, int> map;
 
+    //To add into the <map>
     for (int i = 0; i < len; i++) {
         map[processes[i].getID()] = i;
     }
@@ -63,6 +83,7 @@ void SJF::calcCompletionTime() {
         timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
     timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[map[processes[0].getID()]]));
 
+    //Start loop 
     loop:
     while(!m_readyQueue.empty()) {
         m_readyQueue.erase(m_readyQueue.begin());
@@ -92,7 +113,11 @@ void SJF::calcCompletionTime() {
                         maxCompletionTime = lastTime;
                     }
                     totalOverhead += getCS();
+                    
+                    // Increment counter
                     counter++;
+                    
+                    //Jumped to label <loop>
                     goto loop;
                 }
             }
@@ -120,10 +145,12 @@ void SJF::calcCompletionTime() {
     setTimeLine(timeLine);
 }
 
+//this function work on implementation <SJF> algorithm 
 void SJF::init() {
     Process *processes = getProcesses();
     Process *end = processes + getProcessesSize();
 
+    //Arrange the Processes based on the arrival time before starting the calculations
     sort(processes, end, comp);
 
     if (visited != nullptr) {
@@ -135,11 +162,14 @@ void SJF::init() {
         visited[i] = false;
     }
 
+    //these functions are defined in the <ProcessManagement> class. 
     calcCompletionTime();
     calcTurnAroundTime();
     calcWaitingTime();
 
+    //As long as this variable equals true means that the algorithm has been implemented
     is_init = true;
+    
     delete visited;
     visited = nullptr;
 }
