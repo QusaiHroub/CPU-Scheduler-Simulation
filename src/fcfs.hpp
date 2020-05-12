@@ -3,10 +3,7 @@
  *
  * Authors
  * Qusai Hroub
- *
- */
-
-/* 
+ * 
  * C++ program for implementation of FCFS algorithm  
  * scheduling
  * this class inherits all characteristics in <ProcessManagement>
