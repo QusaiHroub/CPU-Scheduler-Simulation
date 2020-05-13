@@ -95,12 +95,12 @@ int main()  {
                 avgTable.push_back(processManagementList[i]->cpuUtilization());
 
                 table.clear();
-                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesIDs(), 5));
-                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesArrivalTime(), 5));
-                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesBurstTime(), 5));
-                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfCompletionTime(), 5));
-                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfTurnAroundTime(), 5));
-                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfWaitingTime(), 5));
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesIDs(), r.getProcessesLength()));
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesArrivalTime(), r.getProcessesLength()));
+                table.push_back(pair<int *, int> (processManagementList[i]->getProcessesBurstTime(), r.getProcessesLength()));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfCompletionTime(), r.getProcessesLength()));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfTurnAroundTime(), r.getProcessesLength()));
+                table.push_back(pair<int *, int> (processManagementList[i]->getDeepCopyOfWaitingTime(), r.getProcessesLength()));
 
                 draw.drawTable(table);
                 draw.drawAVGSTable(avgTable);
