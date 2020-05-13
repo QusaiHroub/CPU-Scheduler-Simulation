@@ -48,7 +48,7 @@ int ReadData::readFile() {
         //Quantum, used for Round Robin algorithm.
         m_quantum = m_tempArr[2];
         
-        //cContext Switch , used for all algorithms.
+        //Context Switch , used for all algorithms.
         m_contextSwitch = m_tempArr[3];
 
         int sizeOfm_tempArr = index;
