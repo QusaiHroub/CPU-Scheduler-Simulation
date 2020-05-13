@@ -1,13 +1,34 @@
+/*
+ * This file is part of OS Project.
+ *
+ * Authors
+ * Qusai Hroub
+ * Mohammad Abureesh
+ *
+ * Simulate a Paging Memory Manager.
+ * this file, declaration for "pager.hpp".
+ *
+ */
+
 #include "pager.hpp"
 
+//Default constructor.
 Pager::Pager() {
 
 }
 
+
+/*
+    This Constructors receives two parameters, the memory size and
+    Frame size(Page size).
+    call function init() and pass the memory size and frame size to it.
+*/
 Pager::Pager(int mem_size, int frame_size) {
     init(mem_size, frame_size);
 }
 
+
+//Deconstructors
 Pager::~Pager() {
     if (m_memMap.first.first) {
         delete (m_memMap.first.first);
@@ -17,6 +38,7 @@ Pager::~Pager() {
     }
 }
 
+//To initialization paging techne
 void Pager::init(int memSize, int fSize) {
     m_memSize = memSize;
     m_fSize = fSize;
