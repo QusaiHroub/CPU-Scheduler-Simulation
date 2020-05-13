@@ -28,7 +28,7 @@ void ReadData::openFile() {
 
 //To print file after store Data in array <m_tempArr>
 void ReadData::printFile() {
-    int len = PROCESSES_LENGTH * 4 + 5;
+    int len = PROCESSES_LENGTH * 4 + 4;
     for (int i = 0; i < len; i++) {
         cout << m_tempArr[i] << endl;
     }
@@ -60,14 +60,14 @@ int ReadData::readFile() {
         //Context Switch , used for all algorithms.
         m_contextSwitch = m_tempArr[3];
 
-        int sizeOfm_tempArr = PROCESSES_LENGTH * 4 + 5;
+        int sizeOfm_tempArr = PROCESSES_LENGTH * 4 + 4;
         index = 0;
         
        /*
         To add all processes into array <m processes>
         with each process add (process Id, arrival time, CPU Burst, and size)
        */
-        for (int i = 4; i + 4 < sizeOfm_tempArr; i += 4) {
+        for (int i = 4; i + 3 < sizeOfm_tempArr; i += 4) {
             m_processes[index++] = Process(m_tempArr[i], m_tempArr[i + 1], m_tempArr[i + 2], m_tempArr[i + 3]);
         }
     // end read
