@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -31,7 +32,7 @@
 
 using namespace std;
 
-bool isProcessDef(int id, Process *processes, int len);
+Process *isProcessDef(int id, Process *processes, int len);
 
 // Driver code 
 int main()  {
@@ -68,7 +69,7 @@ int main()  {
 
     RR *rr = new RR(r.getProcesses(), r.getContextSwitch(), r.getProcessesLength(), r.getQuantum());
 
-    Pager pager(r.getMemSize(), r.getFrameSize());
+    Pager pager(r.getProcesses(), r.getProcessesLength(), r.getMemSize(), r.getFrameSize());
 
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(fcfs));
     processManagementListOfNames.push_back("FCFS");
@@ -77,8 +78,7 @@ int main()  {
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(rr));
     processManagementListOfNames.push_back("RR");
 
-    pair<PageTable **, int> pageTableList = pager.paging(r.getProcesses(), r.getProcessesLength());
-
+    PageTable *pageTable = nullptr;
     int ch;
 
     mainInputLoop:
@@ -109,29 +109,95 @@ int main()  {
                 draw.drawGANTTChart(processManagementList[i]->getTimeLine());
             }
         } else if (ch == 2) {
-            for (int i = 0; i < pageTableList.second; i++) {
-                cout << endl;
-                draw.drawPageTable(*pageTableList.first[i]);
-            }
-
-            cout << endl;
-            draw.drawMemMap(pager.getMemMap());
-
-            int logicalAddress, processID;
-            while (cout << "\n\tEnter process ID and logicalAssress for mapping: ", cin >> processID >> logicalAddress) {
-                while (!isProcessDef(processID, r.getProcesses(), r.getProcessesLength())) {
-                    cout << "\tProcess " << processID << " not found, enter valid ID: ";
-                    cin >> processID;
+            part2menu:
+            while (cout << "\n\n\t1. allocate process by its ID\n\t2. deallocate process by its ID",
+                   cout << "\n\t3. reallocate process by its ID\n\t4. print page tabel for process",
+                   cout << "\n\t5. print memory map\n\t6. maping logical address to phyiscal\n\t7. return to main menu\n\tselect: ",
+                    cin >> ch) {
+                if (ch == 1) {
+                    cout << "\tEnter Process ID: ";
+                    int id;
+                    Process *p;
+                    while (cin >> id, p = isProcessDef(id, r.getProcesses(), r.getProcessesLength()), p == nullptr) {
+                        cout << "\tEnter valid ID: ";
+                    }
+                    draw.drawPageTable(*pager.palloc(p));
+                } else if (ch == 2) {
+                    cout << "\tEnter Process ID: ";
+                    int id;
+                    Process *p;
+                    while (cin >> id, p = isProcessDef(id, r.getProcesses(), r.getProcessesLength()), p == nullptr) {
+                        cout << "\tEnter valid ID: ";
+                    }
+                    pager.free(p);
+                    cout << "process " << id << " is free from the memory." << endl;
+                } else if (ch == 3) {
+                    cout << "\tEnter Process ID: ";
+                    int id;
+                    Process *p;
+                    while (cin >> id, p = isProcessDef(id, r.getProcesses(), r.getProcessesLength()), p == nullptr) {
+                        cout << "\tEnter valid ID: ";
+                    }
+                    draw.drawPageTable(*pager.prealloc(p));
+                } else if (ch == 4) {
+                    cout << "\tEnter Process ID: ";
+                    int id;
+                    Process *p;
+                    while (cin >> id, p = isProcessDef(id, r.getProcesses(), r.getProcessesLength()), p == nullptr) {
+                        cout << "\tEnter valid ID: ";
+                    }
+                    if (p->getPageTable() == nullptr) {
+                        cout << "\tProcess with ID = " << id << " is not have page table, do you want to yes it? (YES, NO): ";
+                        string input;
+                        cin >> input;
+                        transform(input.begin(), input.end(), input.begin(),
+                            [](unsigned char c){ return std::tolower(c); });
+                        if (input == "yes") {
+                            pager.palloc(p);
+                            pager.free(p);
+                            cout << input << endl;
+                        }
+                    }
+                    draw.drawPageTable(*p->getPageTable());
+                } else if (ch == 5) {
+                    draw.drawMemMap(pager.getMemMap());
+                } else if (ch == 6) {
+                    int logicalAddress, processID;
+                    while (cout << "\n\tEnter process ID and logical address for mapping (enter -1 to return to menu): ", cin >> processID) {
+                        if (processID == -1) {
+                            goto part2menu;
+                        }
+                        cin >> logicalAddress;
+                        Process *process;
+                        while (process = isProcessDef(processID, r.getProcesses(), r.getProcessesLength()), process == nullptr) {
+                            cout << "\tProcess " << processID << " not found, enter valid ID: ";
+                            cin >> processID;
+                        }
+                        Pager::Address address = pager.mapping(*process, logicalAddress);
+                        if (address.errorCode == 1) {
+                            cout << "\tProcess with ID = " << processID << " is not allocated do you want to allocate it? (YES, NO): ";
+                            string input;
+                            cin >> input;
+                            transform(input.begin(), input.end(), input.begin(),
+                                [](unsigned char c){ return std::tolower(c); });
+                            if (input == "yes") {
+                                pager.palloc(process);
+                                address = pager.mapping(*process, logicalAddress);
+                            } else {
+                                continue;
+                            }
+                        }
+                        while (address.errorCode == 2) {
+                            cout << "\tEnter Valid address for process " << processID << ": ";
+                            cin >> logicalAddress;
+                            address = pager.mapping(*process, logicalAddress);
+                        }
+                        draw.drawPhysicalAddressMapingSeq(address);
+                    }
+                } else if (ch == 7) {
+                    goto mainInputLoop;
                 }
-                Pager::Address address = pager.mapping(processID, logicalAddress, pageTableList);
-                while (address.errorCode == 1) {
-                    cout << "\tEnter Valid address for process " << processID << ": ";
-                    cin >> logicalAddress;
-                    address = pager.mapping(processID, logicalAddress, pageTableList);
-                }
-                draw.drawPhysicalAddressMapingSeq(address);
             }
-            goto mainInputLoop;
         } else {
             goto end;
         }
@@ -141,21 +207,19 @@ int main()  {
     delete rr;
     delete sjf;
     delete fcfs;
-
-    for (int i = 0; i < pageTableList.second; i++) {
-        delete pageTableList.first[i];
+    if (!pageTable) {
+        delete pageTable;
     }
-    delete pageTableList.first;
 
     return 0;
 }
 
-bool isProcessDef(int id, Process *processes, int len) {
+Process *isProcessDef(int id, Process *processes, int len) {
     for (int i = 0; i < len; i++) {
         if (processes[i].getID() == id) {
-            return true;
+            return &processes[i];
         }
     }
 
-    return false;
+    return nullptr;
 }

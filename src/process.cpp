@@ -23,6 +23,12 @@ Process::Process(int id, int arrivalTime, int cpuBurst, int size) {
 //Default constructor
 Process::Process() {}
 
+Process::~Process() {
+    if (!m_pageTable) {
+        delete m_pageTable;
+    }
+}
+
 //this function return id for process 
 int Process::getID() {
     return m_id;
@@ -61,4 +67,29 @@ void Process::setCPUBurst(int cpuBurst) {
 //To change Process Size
 void Process::setSize(int size) {
     m_size = size;
+}
+
+PageTable *Process::getPageTable() {
+    return m_pageTable;
+}
+
+int Process::isAlloc() {
+    if (m_pageTable == nullptr) {
+        return false;
+    }
+    int sum = 0;
+    for (int i = 0; i < m_pageTable->getLength(); i++) {
+        sum += m_pageTable->getTable()[i].isInMem;
+    }
+    if (sum == m_pageTable->getLength()) {
+        return -1;
+    }
+    return sum;
+}
+
+void Process::setPageTable(PageTable *pageTable) {
+    if (m_pageTable != nullptr) {
+        delete m_pageTable;
+    }
+    m_pageTable = pageTable;
 }

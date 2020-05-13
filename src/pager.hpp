@@ -25,12 +25,15 @@ class Pager {
     pair < pair < bool *, int >, pair< int, int > *> m_memMap =
             pair < pair < bool *, int >, pair< int, int > *>(pair < bool *, int > (nullptr, 0), nullptr);
     map <int, int> m_processMap;
+
+    PageTable *createTable(Process *);
+    Process *m_processes;
     
 public:
     
     //constructor
     Pager();
-    Pager(int, int);
+    Pager(Process *, int, int, int);
     
     //deconstructor
     ~Pager();
@@ -43,11 +46,16 @@ public:
     };
 
         
-    void init(int, int);
+    void init(Process *, int, int, int);
     pair<PageTable **, int> paging(Process *, int);
 
     pair < pair < bool *, int >, pair< int, int > *> & getMemMap();
-    Address mapping(int, int, pair<PageTable **, int> &);
+    Address mapping(Process &, int);
+
+    PageTable *palloc(Process *);
+    PageTable *talloc(PageTable *);
+    PageTable *prealloc(Process *);
+    void free(Process *);
 };
 
 #endif // PAGER_HPP
