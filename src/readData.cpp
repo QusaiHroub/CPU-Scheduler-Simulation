@@ -69,7 +69,6 @@ int ReadData::readFile() {
        */
         for (int i = 4; i + 3 < sizeOfm_tempArr; i += 4) {
             m_processes[index++] = Process(m_tempArr[i], m_tempArr[i + 1], m_tempArr[i + 2], m_tempArr[i + 3]);
-            cout << m_processes[index-1].getID() << endl;
         }
     // end read
     } else {
