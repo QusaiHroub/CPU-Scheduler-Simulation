@@ -1,3 +1,13 @@
+/*
+ * This file is part of OS Project.
+ *
+ * Authors
+ * Qusai Hroub
+ *
+ *this file, declaration for "pagetable.hpp".
+ *
+ */
+
 #include "pagetable.hpp"
 
 PageTable::PageTable(Process *process, int pageSize, pair<bool *, int>memoryMap) {
@@ -11,19 +21,24 @@ PageTable::PageTable(Process *process, int pageSize, pair<bool *, int>memoryMap)
     init();
 }
 
+//deconstructor
 PageTable::~PageTable() {
     if (m_table) {
         delete m_table;
     }
 }
 
+//This function receives one Parameter to change page size (frame size).
 void PageTable::setPageSize(int pageSize) {
+    
+    //check page size if less than 128
     if (pageSize < 128) {
         pageSize = 128;
     }
     m_pageSize = pageSize;
 }
 
+//To implements PagerTable
 void PageTable::init() {
     int numberOfPagse = m_process->getSize() / m_pageSize;
     m_length = numberOfPagse + 1;
@@ -62,14 +77,20 @@ void PageTable::init() {
     }
 }
 
+/*
+    This function return  array <m_table> of type tableElement. 
+    tableElement is <struct> .
+*/
 PageTable::tableElement *PageTable::getTable() {
     return m_table;
 }
 
+//To return length 
 int PageTable::getLength() {
     return m_length;
 }
 
+//To return Process id 
 int PageTable::getProcessID() {
     return m_process->getID();
 }
