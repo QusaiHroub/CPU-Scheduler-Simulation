@@ -1,3 +1,13 @@
+/*
+ * This file is part of OS Project.
+ *
+ * Authors
+ * Qusai Hroub
+ * 
+ * C++ Program to Draw tables for part one and part two in this project. 
+ * 
+ */
+
 #ifndef DRAW_HPP
 #define DRAW_HPP
 
@@ -11,8 +21,11 @@ using namespace std;
 
 class Draw {
 public:
+    
+    //Constructor
     Draw();
 
+    //Functions
     void drawTable(vector< pair < int *, int> > &);
     void drawAVGSTable(vector<double> &);
     void drawGANTTChart(vector<pair<string, int>> &);
