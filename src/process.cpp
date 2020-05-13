@@ -5,12 +5,9 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ Program
- * this file, declaration for "process.hpp"
- * 
  */
 
-#include "process.hpp"
+#include "process.h"
 
 /*
 This constructor receives process ID, arrival time, CPU burst, and size for each process.

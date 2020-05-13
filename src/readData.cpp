@@ -5,11 +5,11 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ program for read all requirements we needed in this program from text file.
+ * Read all requirements we needed in this program from text file.
  * this file, declaration for "readData.hpp"
  */
 
-#include "readData.hpp"
+#include "readData.h"
 
 
 //To Open file <processes.txt>
@@ -23,7 +23,6 @@ void ReadData::printFile() {
         cout << m_tempArr[i] << endl;
     }
 }
-
 
 /*
 To read the file and add all needed data into array <m_tempArr>.

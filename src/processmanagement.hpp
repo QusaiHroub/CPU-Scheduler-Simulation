@@ -5,8 +5,8 @@
  * Mohammad Abureesh
  * Qusai Hroub
  *
- * C++ program for Process Management
- * Use this class for all scheduling algorithms in this program 
+ * Process Management
+ * Use this class for all scheduling algorithms in this program
  * 
  */
 

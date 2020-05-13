@@ -5,8 +5,8 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ program for implementation of RR algorithm
- * this file, declaration for "RR.hpp"
+ * RR algorithm
+ *
  */
 
 #include "RR.hpp"
@@ -53,7 +53,6 @@ void RR::init(int quantum) {
     //Arrange the Processes based on the arrival time before starting the calculations
     sort(processes, processes + getProcessesSize(), comp);
 
-    //these functions are defined in the <ProcessManagement> class. 
     calcCompletionTime();
     calcTurnAroundTime();
     calcWaitingTime();
@@ -98,6 +97,8 @@ void RR::calcCompletionTime() {
 
     if (processes->getArrivalTime() != 0) {
         timeLine.push_back(pair<string, int>("  ", processes->getArrivalTime()));
+        lastTime = processes->getArrivalTime();
+        maxCompletionTime = lastTime;
     }
 
     //Start loop

@@ -4,7 +4,7 @@
  * Authors
  * Qusai Hroub
  * 
- * C++ program for implementation of FCFS algorithm  
+ * FCFS algorithm
  * scheduling
  * this class inherits all characteristics in <ProcessManagement>
  */
@@ -17,15 +17,12 @@
 
 class FCFS : public ProcessManagement{
 public:
- //constructors
     FCFS(Process * = nullptr, int = 0, int = 5);
     ~FCFS();
 
 private:
     bool is_init = false;
-    
- //Functions 
-    
+        
     //this Function initializes all function for algorithm
     void init();
     

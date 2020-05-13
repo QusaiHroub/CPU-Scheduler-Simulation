@@ -5,13 +5,13 @@
  * Mohammad Abureesh
  * Qusai Hroub
  *
- * C++ program for implementation of RR algorithm
+ * RR algorithm
  * scheduling
  * this class inherits all characteristics in <ProcessManagement>
  *
  */
 
-#include "process.hpp"
+#include "process.h"
 #include "processmanagement.hpp"
 
 class RR : public ProcessManagement

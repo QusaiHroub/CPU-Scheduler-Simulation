@@ -5,14 +5,14 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ program for read text file.
+ * read text file.
  * 
  */
 
 #include <fstream>
 #include <string>
 #include <iostream>
-#include "process.hpp"
+#include "process.h"
 
 using namespace std;
 

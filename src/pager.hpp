@@ -5,7 +5,7 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ Program to Simulate a Paging Memory Manager
+ * memory paging simulation manager
  *
  */
 

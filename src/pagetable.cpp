@@ -4,8 +4,6 @@
  * Authors
  * Qusai Hroub
  *
- *this file, declaration for "pagetable.hpp".
- *
  */
 
 #include "pagetable.hpp"
@@ -42,6 +40,11 @@ void PageTable::setPageSize(int pageSize) {
 void PageTable::init() {
     int numberOfPagse = m_process->getSize() / m_pageSize;
     m_length = numberOfPagse + 1;
+    if (m_process->getSize() % m_pageSize) {
+        m_length++;
+        numberOfPagse++;
+    }
+
     m_table = new tableElement[m_length];
 
     if (m_memoryMap.second < 1 || m_memoryMap.first == nullptr) {

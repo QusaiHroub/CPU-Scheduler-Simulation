@@ -4,7 +4,7 @@
  * Authors
  * Qusai Hroub
  * 
- * C++ Program to Draw tables for part one and part two in this project. 
+ * Draw tables for part one and part two in this project.
  * this file, declaration for "draw.hpp".
  *
  */

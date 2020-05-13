@@ -5,8 +5,8 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ program for implementation of FCFS algorithm
- * this file, declaration for "FCFS.hpp"
+ * FCFS algorithm
+ *
  */
 
 
@@ -44,7 +44,6 @@ void FCFS::init() {
     //Arrange the Processes based on the arrival time before starting the calculations
     sort(processes, processes + getProcessesSize(), comp);
 
- //these functions are defined in the <ProcessManagement> class.   
     calcCompletionTime();
     calcTurnAroundTime();
     calcWaitingTime();

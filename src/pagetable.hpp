@@ -5,12 +5,13 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
+ * Page Table
  */
 
 #ifndef PAGETABLE_HPP
 #define PAGETABLE_HPP
 
-#include "process.hpp"
+#include "process.h"
 
 class PageTable {
 

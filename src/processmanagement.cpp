@@ -5,14 +5,12 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * this file, declaration for "processmanagement.hpp"
- *
  */
 
 #include <algorithm>
 
 #include "processmanagement.hpp"
-#include "process.hpp"
+#include "process.h"
 
 /*
 This constructor receives an array of Processes, context Switch (CS), 

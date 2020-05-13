@@ -6,8 +6,6 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ Program 
- *
  */
 
 #include <iostream>
@@ -21,8 +19,8 @@
 #ifdef __linux__
 #endif
 
-#include "readData.hpp"
-#include "process.hpp"
+#include "readData.h"
+#include "process.h"
 #include "fcfs.hpp"
 #include "sjf.hpp"
 #include "RR.hpp"
@@ -37,9 +35,9 @@ using namespace std;
 int main()  {
 #ifdef _WIN32
     HWND console = GetConsoleWindow();
-    RECT r;
-    GetWindowRect(console, &r);
-    MoveWindow(console, r.left, r.top, 800, 400, TRUE);
+    RECT rect;
+    GetWindowRect(console, &rect);
+    MoveWindow(console, rect.left, rect.top, 800, 400, TRUE);
 #endif
 
 #ifdef __linux__
@@ -55,7 +53,6 @@ int main()  {
 
     ReadData r;
     Process p;
-    Operations op;
 
     r.openFile();
     if (r.readFile()) {

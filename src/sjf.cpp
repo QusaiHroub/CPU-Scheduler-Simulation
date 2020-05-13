@@ -162,7 +162,6 @@ void SJF::init() {
         visited[i] = false;
     }
 
-    //these functions are defined in the <ProcessManagement> class. 
     calcCompletionTime();
     calcTurnAroundTime();
     calcWaitingTime();

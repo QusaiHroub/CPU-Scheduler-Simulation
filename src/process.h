@@ -5,7 +5,7 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * C++ program for Create Process
+ * Process structure
  * 
  */
 
