@@ -1,3 +1,15 @@
+  
+/*
+ * This file is part of OS Project.
+ *
+ * Authors
+ * Qusai Hroub
+ * Mohammad Abureesh
+ *
+ * C++ Program 
+ *
+ */
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -9,9 +21,8 @@
 #ifdef __linux__
 #endif
 
-#include "readData.h"
-#include "operations.h"
-#include "process.h"
+#include "readData.hpp"
+#include "process.hpp"
 #include "fcfs.hpp"
 #include "sjf.hpp"
 #include "RR.hpp"
@@ -22,6 +33,7 @@
 
 using namespace std;
 
+// Driver code 
 int main()  {
 #ifdef _WIN32
     HWND console = GetConsoleWindow();
