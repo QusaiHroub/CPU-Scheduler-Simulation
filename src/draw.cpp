@@ -19,7 +19,7 @@ Draw::Draw() {
 
 }
 
-//To draw averages table for each algorithm in this program.
+//To draw averages table for each algorithm.
 void Draw::drawAVGSTable(vector<double> &table) {
     cout << fixed << setprecision(2);
     cout << "\t+-----------------------------+-----------+" << endl;
@@ -55,7 +55,7 @@ void Draw::drawTable(vector< pair < int *, int> > &table) {
 }
 
 
-//To draw Gant chart for each algorithm in this program.
+//To draw Gant chart for each algorithm.
 void Draw::drawGANTTChart(vector<pair<string, int> > &timeLine) {
     cout << "\tGANTT Chart" << endl;
     cout << "\t+";

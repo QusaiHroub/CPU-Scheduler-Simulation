@@ -101,8 +101,7 @@ void RR::calcCompletionTime() {
         maxCompletionTime = lastTime;
     }
 
-    //Start loop
-    loop:
+   loop:
     
     // if Queue is not Empty enter into to loop
     while (!queue.empty()) {
@@ -118,7 +117,7 @@ void RR::calcCompletionTime() {
 
             lastTime += m_quantum + getCS();
             
-            //Reduce the CPU Burst for process via subtracting quantum in each cycle
+            //Calc remaining CPU Burst for process via subtracting quantum in each cycle.
             cpuBurst[index] -= m_quantum;
             
             totalOverhead += getCS();
@@ -145,6 +144,7 @@ void RR::calcCompletionTime() {
             maxIndex = index;
         }
 
+        //add the ready processes to queue
         for (int i = index + 1; i < len; i++) {
             if (!isInQ[i] && processes[i].getArrivalTime() <= lastTime) {
                 queue.push_back(i);
@@ -162,7 +162,7 @@ void RR::calcCompletionTime() {
             lastTime = processes[queue.front()].getArrivalTime();
             timeLine.push_back(pair<string, int>("  ", lastTime));
             goto loop;
-            //end loop
+            //jump to loop lable
         }
 
     }

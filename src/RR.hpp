@@ -29,7 +29,7 @@ private:
  //Functions 
 
     //this Function initializes all function for algorithm
-    void init(int=0);
+    void init(int = 0);
 
     void calcCompletionTime();
 

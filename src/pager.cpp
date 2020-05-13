@@ -46,6 +46,10 @@ void Pager::init(int memSize, int fSize) {
         delete (m_memMap.first.first);
         m_memMap.first.first = nullptr;
     }
+
+    //init memory map
+    //frame 0 is null frame
+    //frames 1, 2 are used by OS and no process can allocate them.
     m_memMap.first.first = (bool *) calloc(m_memMap.first.second, sizeof(bool));
     m_memMap.first.first[1] = true;
     m_memMap.first.first[2] = true;
@@ -59,6 +63,7 @@ void Pager::init(int memSize, int fSize) {
 
 }
 
+//Create array that contains page table for each process.
 pair<PageTable **, int> Pager::paging(Process *processes, int len) {
     PageTable **list = new PageTable*[len];
     for (int i = 0; i < len; i++) {
@@ -72,10 +77,12 @@ pair<PageTable **, int> Pager::paging(Process *processes, int len) {
     return pair<PageTable **, int> (list, len);
 }
 
+//Returns the pair that contains memory map Pointers
 pair < pair < bool *, int >, pair< int, int > *> &Pager::getMemMap() {
     return m_memMap;
 }
 
+//map logical address to physical address.
 Pager::Address Pager::mapping(int processID, int logicalAddress, pair<PageTable **, int> &tables) {
     Address address;
     address.logicalAndPhysicalAddress.first = logicalAddress;
@@ -83,12 +90,14 @@ Pager::Address Pager::mapping(int processID, int logicalAddress, pair<PageTable 
     address.pd.second = address.logicalAndPhysicalAddress.first - address.pd.first * m_fSize;
     address.pd.first++;
 
+    //check if the logical address is valid address to process with id (processID)
     if (address.pd.first >= tables.first[m_processMap[processID]]->getLength()) {
         address.errorCode = 1;
         return address;
     }
     address.fd.first = tables.first[m_processMap[processID]]->getTable()[address.pd.first].fNumber;
 
+    //Calc physical address
     address.fd.second = address.pd.second;
     address.logicalAndPhysicalAddress.second = address.fd.first * m_fSize + address.fd.second;
     address.errorCode = 0;

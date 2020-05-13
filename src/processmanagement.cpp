@@ -33,7 +33,7 @@ ProcessManagement::ProcessManagement(Process *processes, int cs, int processesSi
 
 /*
 deconstructor.
-If any array in this class is not equal (nullptr), this array will be deleted.
+If any pointer in this class is not free, this pointer will be deleted.
 */
 ProcessManagement::~ProcessManagement() {
     if (m_processes != nullptr) {

@@ -96,7 +96,7 @@ void SJF::calcCompletionTime() {
 
         if (counter >= len) {
             break;
-        } else if (m_readyQueue.empty()) {
+        } else if (m_readyQueue.empty()) { //check if the ready queue is empty and all processes are not processed then start from the remaining process that has the shortest arrival time.
             for (int i = 1; i < len; i++) {
                 if (!visited[i]) {
                     m_readyQueue.push_back(processes[i]);
@@ -122,6 +122,8 @@ void SJF::calcCompletionTime() {
                 }
             }
         }
+
+        //Arrange the Processes in ready queue based on its cpu burst before continuing the calculations
         sort(m_readyQueue.begin(), m_readyQueue.end(), compCPUBurst);
         index = map[m_readyQueue.front().getID()];
 
@@ -157,6 +159,8 @@ void SJF::init() {
         delete visited;
         visited = nullptr;
     }
+
+    //init the list of visited processes, that we use to determine if the process entered the queue or not.
     visited = new bool[getProcessesSize()];
     for (int i = 0; i < getProcessesSize(); i++) {
         visited[i] = false;

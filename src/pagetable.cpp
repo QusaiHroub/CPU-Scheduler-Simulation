@@ -50,6 +50,8 @@ void PageTable::init() {
     if (m_memoryMap.second < 1 || m_memoryMap.first == nullptr) {
         return;
     }
+
+    //search about not used frames and make the process use them.
     int index = 1;
     if (m_memoryMap.first) {
         for (int i = 3; i < m_memoryMap.second; i++) {
@@ -64,6 +66,8 @@ void PageTable::init() {
         }
     }
 
+    //if not all pages are pointed on their own frame, start from the first allocatable frame and select them incrementally.
+    //may be the same frame pointed by more than one page.
     int frameIndex = 3;
     for (int i = index; i < m_length; i++) {
         frameIndex = frameIndex % m_memoryMap.second;
