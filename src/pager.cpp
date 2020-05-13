@@ -59,7 +59,7 @@ void Pager::init(int memSize, int fSize) {
 
 }
 
-pair<PageTable **, int> Pager::paging(Process * processes, int len) {
+pair<PageTable **, int> Pager::paging(Process *processes, int len) {
     PageTable **list = new PageTable*[len];
     for (int i = 0; i < len; i++) {
         list[i] = new PageTable(&processes[i], m_fSize, m_memMap.first);
@@ -91,6 +91,7 @@ Pager::Address Pager::mapping(int processID, int logicalAddress, pair<PageTable 
 
     address.fd.second = address.pd.second;
     address.logicalAndPhysicalAddress.second = address.fd.first * m_fSize + address.fd.second;
+    address.errorCode = 0;
 
     return address;
 }

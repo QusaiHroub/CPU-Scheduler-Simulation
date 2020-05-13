@@ -18,16 +18,17 @@ using namespace std;
 
 class ReadData {
 private:
-    
+    const int PROCESSES_LENGTH;
+
     //Attributes
     string m_data;
     ifstream m_inFile;
     
     //Declare an array of process, for using these processes in all algorithms in this program 
-    Process m_processes[5];
+    Process *m_processes;
     
     //To put all data in this array, when use function readFile().
-    int m_tempArr[24];
+    int *m_tempArr;
     
     int m_memSize;
     int m_pageSize;
@@ -38,6 +39,9 @@ private:
     //end Attributes.
 
 public:
+
+    ReadData(int = 5);
+    ~ReadData();
     
 //Functions
 
@@ -48,7 +52,8 @@ public:
     
     //To return  array of Processes
     Process *getProcesses();
-    
+
+    int getProcessesLength();
     int getContextSwitch();
     int getQuantum();
     int getMemSize();

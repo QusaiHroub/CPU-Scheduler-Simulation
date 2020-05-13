@@ -1,4 +1,4 @@
-  
+
 /*
  * This file is part of OS Project.
  *
@@ -31,6 +31,8 @@
 
 using namespace std;
 
+bool isProcessDef(int id, Process *processes, int len);
+
 // Driver code 
 int main()  {
 #ifdef _WIN32
@@ -51,8 +53,7 @@ int main()  {
     vector < double > avgTable;
     vector< pair < int *, int> > table;
 
-    ReadData r;
-    Process p;
+    ReadData r(5);
 
     r.openFile();
     if (r.readFile()) {
@@ -61,11 +62,11 @@ int main()  {
     }
     r.closeFile();
 
-    FCFS *fcfs = new FCFS(r.getProcesses(), r.getContextSwitch());
+    FCFS *fcfs = new FCFS(r.getProcesses(), r.getContextSwitch(), r.getProcessesLength());
 
-    SJF *sjf = new SJF(r.getProcesses(), r.getContextSwitch());
+    SJF *sjf = new SJF(r.getProcesses(), r.getContextSwitch(), r.getProcessesLength());
 
-    RR *rr = new RR(r.getProcesses(), r.getContextSwitch(), 5, r.getQuantum());
+    RR *rr = new RR(r.getProcesses(), r.getContextSwitch(), r.getProcessesLength(), r.getQuantum());
 
     Pager pager(r.getMemSize(), r.getFrameSize());
 
@@ -76,7 +77,7 @@ int main()  {
     processManagementList.push_back(dynamic_cast<ProcessManagement *>(rr));
     processManagementListOfNames.push_back("RR");
 
-    pair<PageTable **, int> pageTableList = pager.paging(r.getProcesses(), 5);
+    pair<PageTable **, int> pageTableList = pager.paging(r.getProcesses(), r.getProcessesLength());
 
     int ch;
 
@@ -118,13 +119,25 @@ int main()  {
 
             int logicalAddress, processID;
             while (cout << "\n\tEnter process ID and logicalAssress for mapping: ", cin >> processID >> logicalAddress) {
+                while (!isProcessDef(processID, r.getProcesses(), r.getProcessesLength())) {
+                    cout << "\tProcess " << processID << " not found, enter valid ID: ";
+                    cin >> processID;
+                }
                 Pager::Address address = pager.mapping(processID, logicalAddress, pageTableList);
+                while (address.errorCode == 1) {
+                    cout << "\tEnter Valid address for process " << processID << ": ";
+                    cin >> logicalAddress;
+                    address = pager.mapping(processID, logicalAddress, pageTableList);
+                }
                 draw.drawPhysicalAddressMapingSeq(address);
             }
             goto mainInputLoop;
+        } else {
+            goto end;
         }
     }
 
+    end:
     delete rr;
     delete sjf;
     delete fcfs;
@@ -133,5 +146,16 @@ int main()  {
         delete pageTableList.first[i];
     }
     delete pageTableList.first;
+
     return 0;
+}
+
+bool isProcessDef(int id, Process *processes, int len) {
+    for (int i = 0; i < len; i++) {
+        if (processes[i].getID() == id) {
+            return true;
+        }
+    }
+
+    return false;
 }

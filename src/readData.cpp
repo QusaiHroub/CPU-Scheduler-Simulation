@@ -11,6 +11,15 @@
 
 #include "readData.h"
 
+ReadData::ReadData(int processesLenght) : PROCESSES_LENGTH(processesLenght) {
+    m_processes = new Process[PROCESSES_LENGTH];
+    m_tempArr = new int[PROCESSES_LENGTH * 4 + 5];
+}
+
+ReadData::~ReadData() {
+    delete m_processes;
+    delete m_tempArr;
+}
 
 //To Open file <processes.txt>
 void ReadData::openFile() {
@@ -19,7 +28,8 @@ void ReadData::openFile() {
 
 //To print file after store Data in array <m_tempArr>
 void ReadData::printFile() {
-    for (int i = 0; i < 10; i++) {
+    int len = PROCESSES_LENGTH * 4 + 5;
+    for (int i = 0; i < len; i++) {
         cout << m_tempArr[i] << endl;
     }
 }
@@ -50,7 +60,7 @@ int ReadData::readFile() {
         //Context Switch , used for all algorithms.
         m_contextSwitch = m_tempArr[3];
 
-        int sizeOfm_tempArr = index;
+        int sizeOfm_tempArr = PROCESSES_LENGTH * 4 + 5;
         index = 0;
         
        /*
@@ -102,4 +112,8 @@ int ReadData::getMemSize() {
 //To return Page Size or Frame Size
 int ReadData::getFrameSize() {
     return m_pageSize;
+}
+
+int ReadData::getProcessesLength() {
+    return PROCESSES_LENGTH;
 }
