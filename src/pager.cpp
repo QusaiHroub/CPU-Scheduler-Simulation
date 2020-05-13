@@ -5,7 +5,7 @@
  * Qusai Hroub
  * Mohammad Abureesh
  *
- * Simulate a Paging Memory Manager.
+ * C++ Program to Simulate a Paging Memory Manager.
  * this file, declaration for "pager.hpp".
  *
  */
