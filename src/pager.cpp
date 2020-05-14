@@ -191,7 +191,6 @@ PageTable *Pager::prealloc(Process *p) {
     if (!p->isAlloc()) {
         return nullptr;
     }
-    cout << p->isAlloc() << endl;
     if (p->isAlloc() == -1) {
         return p->getPageTable();
     }
@@ -199,7 +198,6 @@ PageTable *Pager::prealloc(Process *p) {
     vector < int > list;
     size_t index = 0;
     for (int i = 1; i < p->getPageTable()->getLength() && allcat_count < p->getPageTable()->getLength(); i++) {
-         cout << m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first << endl;
         if (!p->getPageTable()->getTable()[i].isInMem &&
                 m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first != p->getID()) {
             list.push_back(i);
