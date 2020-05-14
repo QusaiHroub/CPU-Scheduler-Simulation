@@ -178,7 +178,7 @@ PageTable *Pager::talloc(PageTable *pageTable) {
 }
 
 PageTable *Pager::palloc(Process *process) {
-    if (process->isAlloc()) {
+    if (process->isAlloc() == -1) {
         return process->getPageTable();
     }
     if (process->getPageTable() == nullptr) {
@@ -188,7 +188,7 @@ PageTable *Pager::palloc(Process *process) {
 }
 
 PageTable *Pager::prealloc(Process *p) {
-    if (!p->isAlloc()) {
+    if (p->getPageTable() == nullptr) {
         return nullptr;
     }
     if (p->isAlloc() == -1) {
