@@ -158,6 +158,7 @@ PageTable *Pager::createTable(Process *process) {
     return new PageTable(process->getID(), table, length);
 }
 
+//allcoate process (page table).
 PageTable *Pager::talloc(PageTable *pageTable) {
     int len = pageTable->getLength();
     Process *p;
@@ -177,16 +178,23 @@ PageTable *Pager::talloc(PageTable *pageTable) {
     return pageTable;
 }
 
+//allocate process in memory
 PageTable *Pager::palloc(Process *process) {
+    //create new page table if not exist
     if (process->getPageTable() == nullptr) {
         process->setPageTable(createTable(process));
     }
+
+    // if all pages are allocated return page table;
     if (process->isAlloc() == -1) {
         return process->getPageTable();
     }
+
+    //try to allocate all pages with replace old pages in memory and return page table.
     return talloc(process->getPageTable());
 }
 
+//reallocate process with try to not replace any old pages in memory;
 PageTable *Pager::prealloc(Process *p) {
     if (p->getPageTable() == nullptr) {
         return nullptr;
@@ -194,9 +202,13 @@ PageTable *Pager::prealloc(Process *p) {
     if (p->isAlloc() == -1) {
         return p->getPageTable();
     }
-    int allcat_count = p->isAlloc();
+
+    // + 1 is null page which cannot be allocated.
+    int allcat_count = p->isAlloc() + 1;
     vector < int > list;
     size_t index = 0;
+
+    //search about conflict with other processes
     for (int i = 1; i < p->getPageTable()->getLength() && allcat_count < p->getPageTable()->getLength(); i++) {
         if (!p->getPageTable()->getTable()[i].isInMem &&
                 m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first != p->getID()) {
@@ -204,6 +216,8 @@ PageTable *Pager::prealloc(Process *p) {
             allcat_count++;
         }
     }
+
+    //try to change frames for conflicts.
     for (int j = 3; j < m_memMap.first.second; j++) {
         if (!m_memMap.first.first[j]) {
             p->getPageTable()->getTable()[list[index]].fNumber = j;
@@ -217,6 +231,7 @@ PageTable *Pager::prealloc(Process *p) {
     return talloc(p->getPageTable());
 }
 
+//deallcoate process from memory.
 void Pager::free(Process *process) {
     if (process->isAlloc()) {
         PageTable *table = process->getPageTable();

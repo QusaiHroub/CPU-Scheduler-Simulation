@@ -73,6 +73,7 @@ PageTable *Process::getPageTable() {
     return m_pageTable;
 }
 
+//return -1 if all pages are allocated, 0 if all pages not allocated, positive number if some pages are allocated and the number ecqual to number of allocated pages.
 int Process::isAlloc() {
     if (m_pageTable == nullptr) {
         return false;
