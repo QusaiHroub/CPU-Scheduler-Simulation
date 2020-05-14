@@ -178,11 +178,11 @@ PageTable *Pager::talloc(PageTable *pageTable) {
 }
 
 PageTable *Pager::palloc(Process *process) {
-    if (process->isAlloc() == -1) {
-        return process->getPageTable();
-    }
     if (process->getPageTable() == nullptr) {
         process->setPageTable(createTable(process));
+    }
+    if (process->isAlloc() == -1) {
+        return process->getPageTable();
     }
     return talloc(process->getPageTable());
 }
