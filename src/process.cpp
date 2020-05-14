@@ -81,7 +81,7 @@ int Process::isAlloc() {
     for (int i = 0; i < m_pageTable->getLength(); i++) {
         sum += m_pageTable->getTable()[i].isInMem;
     }
-    if (sum == m_pageTable->getLength()) {
+    if (sum + 1 == m_pageTable->getLength()) {
         return -1;
     }
     return sum;

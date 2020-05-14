@@ -138,7 +138,12 @@ int main()  {
                     while (cin >> id, p = isProcessDef(id, r.getProcesses(), r.getProcessesLength()), p == nullptr) {
                         cout << "\tEnter valid ID: ";
                     }
-                    draw.drawPageTable(*pager.prealloc(p));
+                    PageTable *pageT = pager.prealloc(p);
+                    if (pageT == nullptr) {
+                        cout << "You cant reallocat not allocated process." << endl;
+                    } else {
+                        draw.drawPageTable(*pageT);
+                    }
                 } else if (ch == 4) {
                     cout << "\tEnter Process ID: ";
                     int id;

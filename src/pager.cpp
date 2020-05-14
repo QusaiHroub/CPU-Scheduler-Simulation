@@ -11,6 +11,8 @@
 
 #include "pager.hpp"
 
+#include <vector>
+
 //Default constructor.
 Pager::Pager() {
 
@@ -126,7 +128,7 @@ PageTable *Pager::createTable(Process *process) {
         for (int i = 3; i < memoryMap.second; i++) {
             if (!memoryMap.first[i]) {
                 table[index].fNumber = i;
-                table[index++].isValid = i;
+                table[index++].isValid = true;
                 numberOfPagse--;
                 if (!numberOfPagse) {
                     return new PageTable(process->getID(), table, length);
@@ -186,8 +188,34 @@ PageTable *Pager::palloc(Process *process) {
 }
 
 PageTable *Pager::prealloc(Process *p) {
-    free(p);
-    p->setPageTable(createTable(p));
+    if (!p->isAlloc()) {
+        return nullptr;
+    }
+    cout << p->isAlloc() << endl;
+    if (p->isAlloc() == -1) {
+        return p->getPageTable();
+    }
+    int allcat_count = p->isAlloc();
+    vector < int > list;
+    size_t index = 0;
+    for (int i = 1; i < p->getPageTable()->getLength() && allcat_count < p->getPageTable()->getLength(); i++) {
+         cout << m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first << endl;
+        if (!p->getPageTable()->getTable()[i].isInMem &&
+                m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first != p->getID()) {
+            list.push_back(i);
+            allcat_count++;
+        }
+    }
+    for (int j = 3; j < m_memMap.first.second; j++) {
+        if (!m_memMap.first.first[j]) {
+            p->getPageTable()->getTable()[list[index]].fNumber = j;
+            p->getPageTable()->getTable()[list[index++]].isValid = true;
+
+            if (index == list.size()) {
+                break;
+            }
+        }
+    }
     return talloc(p->getPageTable());
 }
 
