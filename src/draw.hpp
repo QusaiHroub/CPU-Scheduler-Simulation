@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -23,10 +23,10 @@ using namespace std;
 class Draw {
 public:
     
-    //Constructor
+    //!Constructor
     Draw();
 
-    //Functions
+    //!Functions
     void drawTable(vector< pair < int *, int> > &);
     void drawAVGSTable(vector<double> &);
     void drawGANTTChart(vector<pair<string, int>> &);
@@ -35,4 +35,4 @@ public:
     void drawPhysicalAddressMapingSeq(Pager::Address &);
 };
 
-#endif // DRAW_HPP
+#endif //! DRAW_HPP

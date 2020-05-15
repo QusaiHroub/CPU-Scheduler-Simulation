@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -23,9 +23,9 @@ public:
 private:
     bool is_init = false;
         
-    //this Function initializes all function for algorithm
+    //!this Function initializes all function for algorithm
     void init();
     
     static bool comp(Process &, Process &);
 };
-#endif // FCFS_HPP
+#endif //! FCFS_HPP

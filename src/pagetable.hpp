@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -20,12 +20,12 @@ public:
         bool isInMem = 0;
     };
 
-    //constructor
+    //!constructor
     PageTable(int = -1, tableElement * = nullptr, int = 0);
     ~PageTable();
 
 
-    //functions
+    //!functions
     int getLength();
     int getPgaeSize();
     int getProcessID();
@@ -34,16 +34,16 @@ public:
 
 private:
     
-    //Attributes
+    //!Attributes
     int m_length;
     int m_processID;
     tableElement *m_table;
 
-    //functions
+    //!functions
     
-    //To implements PagerTable
+    //!To implements PagerTable
     void init(int, tableElement *, int = 0);
     
 };
 
-#endif // PAGETABLE_HPP
+#endif //! PAGETABLE_HPP

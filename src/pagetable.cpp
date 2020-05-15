@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -16,14 +16,14 @@ PageTable::PageTable(int processID, tableElement *table, int len) {
     init(processID, table, len);
 }
 
-//deconstructor
+//!deconstructor
 PageTable::~PageTable() {
     if (m_table) {
         delete m_table;
     }
 }
 
-//To implements PagerTable
+//!To implements PagerTable
 void PageTable::init(int processID, tableElement *table, int len) {
     if (processID == -1 || !table || len < 1) {
         return;
@@ -33,7 +33,7 @@ void PageTable::init(int processID, tableElement *table, int len) {
     m_length = len;
 }
 
-/*
+/*!
     This function return  array <m_table> of type tableElement. 
     tableElement is <struct> .
 */
@@ -41,12 +41,12 @@ PageTable::tableElement *PageTable::getTable() {
     return m_table;
 }
 
-//To return length 
+//!To return length
 int PageTable::getLength() {
     return m_length;
 }
 
-//To return Process id 
+//!To return Process id
 int PageTable::getProcessID() {
     return m_processID;
 }

@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -20,11 +20,11 @@ class Process
 {
 private:
 
-    //Attributes for each process			
+    //!Attributes for each process
     int m_arrivalTime;
     int m_cpuBurst;
 	
-    // size in Bytes		
+    //! size in Bytes
     int m_size;   
     int m_id;
 
@@ -32,12 +32,12 @@ private:
 
 public:
     
-    //Constructor 	 
+    //!Constructor
     Process();
     Process(int, int, int, int);
     ~Process();
 
-    //getters and setters
+    //!getters and setters
 	
     int getArrivalTime();
     int getCpuBurst();

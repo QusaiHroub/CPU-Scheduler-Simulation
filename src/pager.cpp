@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -13,13 +13,13 @@
 
 #include <vector>
 
-//Default constructor.
+//!Default constructor.
 Pager::Pager() {
 
 }
 
 
-/*
+/*!
     This Constructors receives two parameters, the memory size and
     Frame size(Page size).
     call function init() and pass the memory size and frame size to it.
@@ -29,7 +29,7 @@ Pager::Pager(Process *processes, int len, int mem_size, int frame_size) {
 }
 
 
-//Deconstructors
+//!Deconstructors
 Pager::~Pager() {
     if (m_memMap.first.first) {
         delete (m_memMap.first.first);
@@ -39,7 +39,7 @@ Pager::~Pager() {
     }
 }
 
-//To initialization paging techne
+//!To initialization paging techne
 void Pager::init(Process *processes, int len, int memSize, int fSize) {
     m_processes = processes;
     if (processes != nullptr) {
@@ -55,9 +55,9 @@ void Pager::init(Process *processes, int len, int memSize, int fSize) {
         m_memMap.first.first = nullptr;
     }
 
-    //init memory map
-    //frame 0 is null frame
-    //frames 1, 2 are used by OS and no process can allocate them.
+    //!init memory map
+    //!frame 0 is null frame
+    //!frames 1, 2 are used by OS and no process can allocate them.
     m_memMap.first.first = (bool *) calloc(m_memMap.first.second, sizeof(bool));
     m_memMap.first.first[1] = true;
     m_memMap.first.first[2] = true;
@@ -71,12 +71,12 @@ void Pager::init(Process *processes, int len, int memSize, int fSize) {
 
 }
 
-//Returns the pair that contains memory map Pointers
+//!Returns the pair that contains memory map Pointers
 pair < pair < bool *, int >, pair< int, int > *> &Pager::getMemMap() {
     return m_memMap;
 }
 
-//map logical address to physical address.
+//!map logical address to physical address.
 Pager::Address Pager::mapping(Process  &process, int logicalAddress) {
     PageTable *table = process.getPageTable();
     Address address;
@@ -90,14 +90,14 @@ Pager::Address Pager::mapping(Process  &process, int logicalAddress) {
     address.pd.second = address.logicalAndPhysicalAddress.first - address.pd.first * m_fSize;
     address.pd.first++;
 
-    //check if the logical address is valid address to process with id (processID)
+    //!check if the logical address is valid address to process with id (processID)
     if (address.pd.first >= table->getLength()) {
         address.errorCode = 2;
         return address;
     }
     address.fd.first = table->getTable()[address.pd.first].fNumber;
 
-    //Calc physical address
+    //!Calc physical address
     address.fd.second = address.pd.second;
     address.logicalAndPhysicalAddress.second = address.fd.first * m_fSize + address.fd.second;
     address.errorCode = 0;
@@ -105,7 +105,7 @@ Pager::Address Pager::mapping(Process  &process, int logicalAddress) {
     return address;
 }
 
-//create page table for process.
+//!create page table for process.
 PageTable *Pager::createTable(Process *process) {
     int numberOfPagse = process->getSize() / m_fSize;
     int length = numberOfPagse + 1;
@@ -122,7 +122,7 @@ PageTable *Pager::createTable(Process *process) {
         return nullptr;
     }
 
-    //search about not used frames and make the process use them.
+    //!search about not used frames and make the process use them.
     int index = 1;
     if (memoryMap.first) {
         for (int i = 3; i < memoryMap.second; i++) {
@@ -137,8 +137,8 @@ PageTable *Pager::createTable(Process *process) {
         }
     }
 
-    //if not all pages are pointed on their own frame, start from the first allocatable frame and select them incrementally.
-    //may be the same frame pointed by more than one page.
+    //!if not all pages are pointed on their own frame, start from the first allocatable frame and select them incrementally.
+    //!may be the same frame pointed by more than one page.
     int frameIndex = 3;
     for (int i = index; i < length; i++) {
         frameIndex = frameIndex % memoryMap.second;
@@ -158,7 +158,7 @@ PageTable *Pager::createTable(Process *process) {
     return new PageTable(process->getID(), table, length);
 }
 
-//allcoate process (page table).
+//!allcoate process (page table).
 PageTable *Pager::talloc(PageTable *pageTable) {
     int len = pageTable->getLength();
     Process *p;
@@ -178,23 +178,23 @@ PageTable *Pager::talloc(PageTable *pageTable) {
     return pageTable;
 }
 
-//allocate process in memory
+//!allocate process in memory
 PageTable *Pager::palloc(Process *process) {
-    //create new page table if not exist
+    //!create new page table if not exist
     if (process->getPageTable() == nullptr) {
         process->setPageTable(createTable(process));
     }
 
-    // if all pages are allocated return page table;
+    //! if all pages are allocated return page table;
     if (process->isAlloc() == -1) {
         return process->getPageTable();
     }
 
-    //try to allocate all pages with replace old pages in memory and return page table.
+    //!try to allocate all pages with replace old pages in memory and return page table.
     return talloc(process->getPageTable());
 }
 
-//reallocate process with try to not replace any old pages in memory;
+//!reallocate process with try to not replace any old pages in memory;
 PageTable *Pager::prealloc(Process *p) {
     if (p->getPageTable() == nullptr) {
         return nullptr;
@@ -203,12 +203,12 @@ PageTable *Pager::prealloc(Process *p) {
         return p->getPageTable();
     }
 
-    // + 1 is null page which cannot be allocated.
+    //! + 1 is null page which cannot be allocated.
     int allcat_count = p->isAlloc() + 1;
     vector < int > list;
     size_t index = 0;
 
-    //search about conflict with other processes
+    //!search about conflict with other processes
     for (int i = 1; i < p->getPageTable()->getLength() && allcat_count < p->getPageTable()->getLength(); i++) {
         if (!p->getPageTable()->getTable()[i].isInMem &&
                 m_memMap.second[p->getPageTable()->getTable()[i].fNumber].first != p->getID()) {
@@ -217,7 +217,7 @@ PageTable *Pager::prealloc(Process *p) {
         }
     }
 
-    //try to change frames for conflicts.
+    //!try to change frames for conflicts.
     for (int j = 3; j < m_memMap.first.second; j++) {
         if (!m_memMap.first.first[j]) {
             p->getPageTable()->getTable()[list[index]].fNumber = j;
@@ -231,7 +231,7 @@ PageTable *Pager::prealloc(Process *p) {
     return talloc(p->getPageTable());
 }
 
-//deallcoate process from memory.
+//!deallcoate process from memory.
 void Pager::free(Process *process) {
     if (process->isAlloc()) {
         PageTable *table = process->getPageTable();

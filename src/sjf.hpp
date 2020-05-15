@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -20,7 +20,7 @@ using namespace std;
 
 class SJF : public ProcessManagement{
 public:
-  //constructors 
+  //!constructors
     SJF(Process * = nullptr, int = 0, int = 5);
     ~SJF();
 
@@ -29,9 +29,9 @@ private:
     vector<Process> m_readyQueue;
     bool *visited;
 
- //Functions 
+ //!Functions
     
-    //this Function initializes all function for algorithm
+    //!this Function initializes all function for algorithm
     void init();
 
     void calcCompletionTime();

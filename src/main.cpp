@@ -1,5 +1,5 @@
 
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -34,13 +34,13 @@ using namespace std;
 
 Process *isProcessDef(int id, Process *processes, int len);
 
-// Driver code 
+//! Driver code
 int main()  {
 #ifdef _WIN32
     HWND console = GetConsoleWindow();
     RECT rect;
     GetWindowRect(console, &rect);
-    MoveWindow(console, rect.left, rect.top, 800, 400, TRUE);
+    MoveWindow(console, rect.left, rect.top, 1000, 600, TRUE);
 #endif
 
 #ifdef __linux__

@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -14,12 +14,12 @@
 #include <iostream>
 #include <iomanip>
 
-//Default constructor.
+//!Default constructor.
 Draw::Draw() {
 
 }
 
-//To draw averages table for each algorithm.
+//!To draw averages table for each algorithm.
 void Draw::drawAVGSTable(vector<double> &table) {
     cout << fixed << setprecision(2);
     cout << "\t+-----------------------------+-----------+" << endl;
@@ -37,7 +37,7 @@ void Draw::drawAVGSTable(vector<double> &table) {
     cout << "\t+-----------------------------+-----------+" << endl;
 }
 
-//To draw table for all processes, and it contains all info for each process
+//!To draw table for all processes, and it contains all info for each process
 void Draw::drawTable(vector< pair < int *, int> > &table) {
     cout << "\t+--------------+----------------+--------------+-------------------+--------------------+----------------+" << endl;
     cout << "\t|  Process ID  |  Arrival Time  |  Burst Time  |  Completion Time  |  Turn Around Time  |  Waiting Time  |" << endl;
@@ -55,7 +55,7 @@ void Draw::drawTable(vector< pair < int *, int> > &table) {
 }
 
 
-//To draw Gant chart for each algorithm.
+//!To draw Gant chart for each algorithm.
 void Draw::drawGANTTChart(vector<pair<string, int> > &timeLine) {
     cout << "\tGANTT Chart" << endl;
     cout << "\t+";
@@ -83,7 +83,7 @@ void Draw::drawGANTTChart(vector<pair<string, int> > &timeLine) {
     cout << endl;
 }
 
-//To draw Page table for use in part two
+//!To draw Page table for use in part two
 void Draw::drawPageTable(PageTable &pageTable) {
     int len = pageTable.getLength();
     PageTable::tableElement *table = pageTable.getTable();
@@ -113,7 +113,7 @@ void Draw::drawPageTable(PageTable &pageTable) {
 }
 
 
-//To draw memory Map for use in part two 
+//!To draw memory Map for use in part two
 void Draw::drawMemMap(pair<pair<bool *, int>, pair<int, int> *> &memMap) {
     string stat1 = "NULL", stat2 = "---", stat3 = "---";
     int len = memMap.first.second;
@@ -148,7 +148,7 @@ void Draw::drawMemMap(pair<pair<bool *, int>, pair<int, int> *> &memMap) {
     }
 }
 
-//To draw Physical Address Maping for use in part two
+//!To draw Physical Address Maping for use in part two
 void Draw::drawPhysicalAddressMapingSeq(Pager::Address &address) {
     cout << "\tPhysical address is " << address.logicalAndPhysicalAddress.second << endl;
     cout << "\t" << address.logicalAndPhysicalAddress.first << " ---> (p, d) = ("

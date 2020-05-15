@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -21,7 +21,7 @@
 class ProcessManagement {
 public:
     
-     //constructors
+     //!constructors
     ProcessManagement(Process * = nullptr, int = 0, int = 5);
     virtual ~ProcessManagement();
 
@@ -39,10 +39,10 @@ public:
 
 private:
     
-    //Numbers of Processes in File
+    //!Numbers of Processes in File
     const int PROCESSES_SIZE;
     
-    //Attributes
+    //!Attributes
     Process *m_processes = nullptr;
     int m_CS;
     int m_totalOverhead;
@@ -52,15 +52,15 @@ private:
     int *m_waitingTime = nullptr;
     int *m_completionTime = nullptr;
     int *m_turnAroundTime = nullptr;    
-    //end attributes
+    //!end attributes
     
     vector< pair <string, int> > m_timeLine;
     
-     //this Function initializes for Processes Management 
+     //!this Function initializes for Processes Management
     void init(Process * = nullptr, int = 0);
 
 protected:
-    // virtual functions
+    //! virtual functions
     virtual void calcCompletionTime();
     virtual void calcWaitingTime();
     virtual void calcTurnAroundTime();
@@ -79,4 +79,4 @@ protected:
     void setTimeLine(vector< pair <string, int> > &);
 };
 
-#endif // PROCESSMANAGEMENT_HPP
+#endif //! PROCESSMANAGEMENT_HPP

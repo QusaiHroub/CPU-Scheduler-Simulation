@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -17,7 +17,7 @@
 class RR : public ProcessManagement
 {
 public:
- //constructors
+ //!constructors
     RR(Process* = nullptr, int = 0, int = 5, int = 0);
     ~RR();
 
@@ -26,14 +26,14 @@ private:
     
     int m_quantum;
 
- //Functions 
+ //!Functions
 
-    //this Function initializes all function for algorithm
+    //!this Function initializes all function for algorithm
     void init(int = 0);
 
     void calcCompletionTime();
 
-    //this function return true if arrival time for first process less than arrival time for the second process.  
+    //!this function return true if arrival time for first process less than arrival time for the second process.
     static bool comp(Process &, Process &);
 };
 

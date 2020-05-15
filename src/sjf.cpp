@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -17,7 +17,7 @@
 
 using namespace std;
 
-/*
+/*!
 This constructor receives an array of Processes, context Switch (CS), 
 and the size of the operations, and if the array equals nullptr, 
 it returns and does not implement the algorithm. Otherwise, it calls the function that implements the algorithm init().
@@ -28,41 +28,41 @@ SJF::SJF(Process* processes, int cs, int processesSize) : ProcessManagement(proc
         return;
     }
 
-    //call this function for implements SJF algorithm
+    //!call this function for implements SJF algorithm
     init();
 }
 
-//deconstructor
+//!deconstructor
 SJF::~SJF() {
 
 }
 
-//this function return true, when the arrival time of the first process is less than the arrival time of the second process.
+//!this function return true, when the arrival time of the first process is less than the arrival time of the second process.
 bool SJF::comp(Process &p1, Process &p2) {
     return p1.getArrivalTime() < p2.getArrivalTime();
 }
 
-//this function return true, when the CPU Bursy of the first process is less than the CPU Burst of the second process.
+//!this function return true, when the CPU Bursy of the first process is less than the CPU Burst of the second process.
 bool SJF::compCPUBurst(Process &p1, Process &p2) {
     return p1.getCpuBurst() < p2.getCpuBurst();
 }
 
-// Function to calculate Completion Time for SJF algorithm 
+//! Function to calculate Completion Time for SJF algorithm
 void SJF::calcCompletionTime() {
     
-    //Declare an array of Processes
+    //!Declare an array of Processes
     Process *processes = getProcesses();
     int len = getProcessesSize();
     
-    //Declare an array integer to store the end time for each process
+    //!Declare an array integer to store the end time for each process
     int *completionTime = new int[len];
 
     vector< pair <string, int> > timeLine;
     
-    //To create a map with a key of the type integer,and value of type integer   
+    //!To create a map with a key of the type integer,and value of type integer
     map<int, int> map;
 
-    //To add into the <map>
+    //!To add into the <map>
     for (int i = 0; i < len; i++) {
         map[processes[i].getID()] = i;
     }
@@ -83,7 +83,7 @@ void SJF::calcCompletionTime() {
         timeLine.push_back(pair<string, int>("CS", processes->getArrivalTime() + getCS()));
     timeLine.push_back(pair<string, int>("P"  + to_string(processes->getID()), completionTime[map[processes[0].getID()]]));
 
-    //Start loop 
+    //!Start loop
     loop:
     while(!m_readyQueue.empty()) {
         m_readyQueue.erase(m_readyQueue.begin());
@@ -96,7 +96,7 @@ void SJF::calcCompletionTime() {
 
         if (counter >= len) {
             break;
-        } else if (m_readyQueue.empty()) { //check if the ready queue is empty and all processes are not processed then start from the remaining process that has the shortest arrival time.
+        } else if (m_readyQueue.empty()) { //!check if the ready queue is empty and all processes are not processed then start from the remaining process that has the shortest arrival time.
             for (int i = 1; i < len; i++) {
                 if (!visited[i]) {
                     m_readyQueue.push_back(processes[i]);
@@ -114,16 +114,16 @@ void SJF::calcCompletionTime() {
                     }
                     totalOverhead += getCS();
                     
-                    // Increment counter
+                    //! Increment counter
                     counter++;
                     
-                    //Jumped to label <loop>
+                    //!Jumped to label <loop>
                     goto loop;
                 }
             }
         }
 
-        //Arrange the Processes in ready queue based on its cpu burst before continuing the calculations
+        //!Arrange the Processes in ready queue based on its cpu burst before continuing the calculations
         sort(m_readyQueue.begin(), m_readyQueue.end(), compCPUBurst);
         index = map[m_readyQueue.front().getID()];
 
@@ -147,12 +147,12 @@ void SJF::calcCompletionTime() {
     setTimeLine(timeLine);
 }
 
-//this function work on implementation <SJF> algorithm 
+//!this function work on implementation <SJF> algorithm
 void SJF::init() {
     Process *processes = getProcesses();
     Process *end = processes + getProcessesSize();
 
-    //Arrange the Processes based on the arrival time before starting the calculations
+    //!Arrange the Processes based on the arrival time before starting the calculations
     sort(processes, end, comp);
 
     if (visited != nullptr) {
@@ -160,7 +160,7 @@ void SJF::init() {
         visited = nullptr;
     }
 
-    //init the list of visited processes, that we use to determine if the process entered the queue or not.
+    //!init the list of visited processes, that we use to determine if the process entered the queue or not.
     visited = new bool[getProcessesSize()];
     for (int i = 0; i < getProcessesSize(); i++) {
         visited[i] = false;
@@ -170,7 +170,7 @@ void SJF::init() {
     calcTurnAroundTime();
     calcWaitingTime();
 
-    //As long as this variable equals true means that the algorithm has been implemented
+    //!As long as this variable equals true means that the algorithm has been implemented
     is_init = true;
     
     delete visited;

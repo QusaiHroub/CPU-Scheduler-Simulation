@@ -1,4 +1,4 @@
-/*
+/*!
  * This file is part of OS Project.
  *
  * Authors
@@ -19,7 +19,7 @@
 
 class Pager {
     
-    //Attributes
+    //!Attributes
     int m_memSize;
     int m_fSize;
     pair < pair < bool *, int >, pair< int, int > *> m_memMap =
@@ -31,11 +31,11 @@ class Pager {
     
 public:
     
-    //constructor
+    //!constructor
     Pager();
     Pager(Process *, int, int, int);
     
-    //deconstructor
+    //!deconstructor
     ~Pager();
 
     struct Address{
@@ -58,4 +58,4 @@ public:
     void free(Process *);
 };
 
-#endif // PAGER_HPP
+#endif //! PAGER_HPP
